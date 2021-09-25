@@ -83,6 +83,8 @@ will print `3` to the standard output.
 
 The condition should have type `bool`, and the body have type `unit`. The overall while expression will have type `unit`.
 
+To simplify its compiler, Patina has no `break` or `continue` constructs.
+
 
 [^1]: For those of you familiar with Java or C, the semicolon has a different meaning here. In Java or C, a semicolon signals the end of a simple statement. In Patina, a semicolon is always sandwiched between two expressions, and it means that "we don't care the value of the first expression, but please evaluate it before you evaluate the expression after the semicolon."
 

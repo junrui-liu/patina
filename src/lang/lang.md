@@ -1,4 +1,6 @@
-# Language Specification
+# Language Overview
+
+> This chapter gives an informal overview of the Patina language. More precise specifications can be found in the description of the corresponding programming projects.
 
 A Patina program is a list of function definitions, one of which must be the `main` function that acts as the entry point of the program:
 ```rust,no_run,noplayground

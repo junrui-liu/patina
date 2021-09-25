@@ -4,3 +4,7 @@ language = "en"
 multilingual = false
 src = "src"
 title = "The Patina Programming Language"
+
+[output.html]
+mathjax-support = true
+theme = "theme" # the name of the directory you put hljs in
