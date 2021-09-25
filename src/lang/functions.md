@@ -1,6 +1,6 @@
 ## Functions
 
-In Patina, functions are the only creatures that are _not_ expressions. They are declared at the top level, along with the mandatory `main` function. By convention, `main` doesn't take in any argument, and always has return type `unit`. Other functions can have any return type (`unit`, `int`, or `[int]`), and their arguments also need to be annotated with types. The body of each function is a Patina expression whose type must match the declared return type.
+In Patina, functions are the only creatures that are _not_ expressions. They are declared at the top level, along with the mandatory `main` function. By convention, `main` doesn't take in any argument, and always has return type `unit`. Other functions can have any return type (`unit`, `bool`, `int`, or `[int]`), and their arguments also need to be annotated with types. The body of each function is a Patina expression whose type must match the declared return type.
 
 
 
@@ -39,7 +39,7 @@ This program will print out `true`.
 
 
 
-### Built-in functions
+### Built-in Functions
 
 Patina also provides the following built-in functions, which can be called freely in Patina programs:
 ```rust,no_run,noplayground

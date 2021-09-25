@@ -1,12 +1,12 @@
 # Summary
 
 - [Introduction](./introduction.md)
-- [Overview](./overview/overview.md)
-  - [Integer Expressions](./overview/integer.md)
-  - [Boolean Expressions](./overview/boolean.md)
-  - [Unit Expressions](./overview/unit.md)
-  - [Arrays](./overview/arrays.md)
-  - [Functions](./overview/functions.md)
+- [Language Specification](./lang/lang.md)
+  - [Integer Expressions](./lang/integer.md)
+  - [Boolean Expressions](./lang/boolean.md)
+  - [Unit Expressions](./lang/unit.md)
+  - [Arrays](./lang/arrays.md)
+  - [Functions](./lang/functions.md)
 - [Programming Projects](./projects/projects.md)
   - [Project 1: OCaml](./projects/p1.md)
   - [Project 2: Lexing and Parsing](./projects/p2.md)

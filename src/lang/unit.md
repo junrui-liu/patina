@@ -70,7 +70,7 @@ print_int(x)
 initializes a new integer variable `x` with value `-1`, increments the value of `x` by `2`, and prints `1` to the screen.
 
 
-### While Loops
+### While Expressions
 Patina's _while expressions_ are very similar to the while loops in other imperative languages like C or Java. A while expression has a _condition_ and a _body_. To evaluate a while expression, we first evaluate the condition. If it is `true`, then we evaluate the body expression repeatedly until the condition becomes `false`. Otherwise, the body expression will not be evaluated. For example,
 ```rust,no_run,noplayground
 let i: int = 0;

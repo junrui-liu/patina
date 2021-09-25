@@ -30,7 +30,7 @@ where `xs` is an array, and `i` is an integer expression.
 When an array access appears on the left-hand side of an assignment, the selected array element can be mutated, just like how the value of a variable is mutated. For example,
 ```rust,no_run,noplayground
 let singleton: [int] = alloc(1);
-singleton[0] := 100
+singleton[0] = 100
 ```
 changes the 0-th element of `singleton` from the default value of `0` to `100`.
 

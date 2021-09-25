@@ -1,4 +1,4 @@
-# Overview
+# Language Specification
 
 A Patina program is a list of function definitions, one of which must be the `main` function that acts as the entry point of the program:
 ```rust,no_run,noplayground
