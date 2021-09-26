@@ -185,4 +185,4 @@ _Hint_: You may want to use [`ref` cells](https://cs3110.github.io/textbook/chap
 You will gain some familiarity with the full Patina language by writing some short programs and playing with them using a prototype interpreter. -->
 
 
-[^1]: This helper function is an example of what's called a [state monad](https://en.wikibooks.org/wiki/Haskell/Understanding_monads/State), which is a functional way of simulating "state changes" without using mutable variables.
+[^1]: This helper function is an example of what's called a [state monad](http://learnyouahaskell.com/for-a-few-monads-more#state), which is a functional way of simulating "state changes" without using mutable variables. (The linked article is for people learning a different functional language called Haskell, but the syntax involved in that particular discussion is quite similar to OCaml's syntax.)

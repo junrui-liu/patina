@@ -1,5 +1,6 @@
 ## Arrays
 
+
 Patina supports dynamically allocated, zero-indexed arrays of integers.
 
 
@@ -8,8 +9,10 @@ Patina supports dynamically allocated, zero-indexed arrays of integers.
 
 We can create an array by calling the built-in function `alloc(..)` with a desired length. All elements will be initialized to `0`. For example,
 ```rust,no_run,noplayground
-let len: int = 3;
-let xs: [int] = alloc(len)
+{
+  let len: int = 3;
+  let xs: [int] = alloc(len)
+}
 ```
 creates an array of length `3` and binds it to variable `xs`.
 
@@ -29,8 +32,10 @@ where `xs` is an array, and `i` is an integer expression.
 
 When an array access appears on the left-hand side of an assignment, the selected array element can be mutated, just like how the value of a variable is mutated. For example,
 ```rust,no_run,noplayground
-let singleton: [int] = alloc(1);
-singleton[0] = 100
+{
+  let singleton: [int] = alloc(1);
+  singleton[0] = 100
+}
 ```
 changes the 0-th element of `singleton` from the default value of `0` to `100`.
 
@@ -40,8 +45,11 @@ changes the 0-th element of `singleton` from the default value of `0` to `100`.
 
 Aliasing is permitted in Patina. Two array variables can simultaneously refer to the same array object:
 ```rust,no_run,noplayground
-let xs: [int] = alloc(1);
-let ys: [int] = xs // ys refers to the same array as xs
+{
+  let xs: [int] = alloc(1);
+  let ys: [int] = xs; // ys refers to the same array as xs
+  ...
+}
 ```
 
 Arrays are passed by reference. So `[int]` is like a pointer to integer (`int *`) in C++. In the following example, both `reverse_1` and `reverse_2` reverses the input array. However, `reverse_1` modifies the input array _in place_, while `reverse_2` returns a _new_ array that's the reverse of the input array.

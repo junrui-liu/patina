@@ -39,4 +39,6 @@ if 0 == 1 then {
 ```
 evaluates to `7`.
 
+You may have noticed the extra pair of curly braces that enclose the `then` and the `else` branch. They are not just there for readability; in fact, `{ ... }` is another kind of expression in Patina, called _sequence expressions_. You will learn more about them in the next section.
+
 [^1]: For those of you familiar with C++ (or Java), Patina's if-then-else expressions correspond to C++'s conditional expressions. For example, the if-then-else expression here would translate to `0<=1 ? (2+3) : (3*4)` in C++. Importantly, Patina's if-then-else expressions are different from C++'s if-_statements_. Statements don't produce values, but expressions do.

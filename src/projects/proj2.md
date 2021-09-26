@@ -8,7 +8,7 @@ You will write some simple programs in the Patina language. We'll provide a prot
 
 ### Part 2
 
-> Goal of this exercise: Use the `ocamlleex` lexer generator to write a lexer.
+> Goal of this exercise: Use the `ocamllex` lexer generator to write a lexer.
 
 <!-- TODO: Provide a more precise spec here -->
 
