@@ -78,7 +78,9 @@ fn reverse_2(xs: [int], len: int) -> [int] {
 
 ### Extent
 
-Because you're not required to implement a garbage collector for your compiler, arrays will have infinite extent. In other words, an array cannot be destroyed once it is allocated in heap memory. In the following example, even after the function `f` has returned, the array referred to by `xs` inside the body of `f` continues to exist in heap memory. But we can't access the array again, because its name `xs` is no longer available outside the function body:
+Because you're not required to implement a garbage collector for your compiler, arrays will have infinite extent. In other words, an array cannot be destroyed once it has been allocated.
+
+In the following example, even after the function `f` has returned, the array referred to by `xs` inside the body of `f` continues to exist in heap memory. But we can't access the array again, because its only name `xs` is no longer available outside the function body:
 ```rust,no_run,noplayground
 fn f() -> unit {
   let xs: [int] = alloc(1); // xs refers to an array in heap memory
@@ -90,6 +92,6 @@ fn main() -> unit {
   ... // can't refer to that array anymore, since xs is out-of-scope
 }
 ```
-Once we've created an array, unless we always keep its name around, it would become an unnameable identity forever lost in heap memory. This is what's called a [memory leak](https://en.wikipedia.org/wiki/Memory_leak), which plagues programs written in unmanaged languages like C and C++. You will learn about solutions to this problem in the second half of the quarter, although you won't be required to implement them [^1].
+Once we've created an array, unless we always remember its name (or one of its names), the array would become an unnameable identity forever lost in heap memory. This is what's called a [memory leak](https://en.wikipedia.org/wiki/Memory_leak), which plagues programs written in unmanaged languages like C and C++. You will learn about solutions to this problem in the second half of the course, although you won't be required to implement them [^1].
 
 [^1]: Also, learn how Rust prevents resource leaks using a [completely different approach](https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html). It's super cool!

@@ -1,8 +1,8 @@
-# Language Overview
+# Overview
 
-> This chapter gives an informal overview of the Patina language. More precise specifications can be found in the description of the corresponding programming projects.
+> This chapter gives an informal overview of the Patina language. More precise specifications can be found in the next chapter.
 
-A Patina program is a list of function definitions, one of which must be the `main` function that acts as the entry point of the program:
+A Patina program consists of a list of function definitions, one of is a function called `main` that acts as the entry point of the program:
 ```rust,no_run,noplayground
 fn my_function(<arg_name>: <arg_type>) -> <return_type> {
   ... // body of my_function
