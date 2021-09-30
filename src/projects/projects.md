@@ -1,7 +1,11 @@
 # Projects
 
-You will be writing your compiler in [OCaml](https://ocaml.org/), a modern functional language used by [Facebook](https://fbinfer.com/), [Jane Street](https://www.janestreet.com/technology/#work-functionally), [Galois](https://github.com/GaloisInc?language=ocaml), and [many more companies](https://ocaml.org/learn/companies.html).
+## Set-up
 
-If this is your first time programming in a functional language, it is our secret agenda that by the end of the course, you will start to wonder, "perhaps the world will be a better place if there is more functional programming."
+You will need `opam` to run and compile OCaml code. Here is an [installation guide](https://github.com/fredfeng/CS162/blob/master/sections/section1/install_ocaml.md), written by Bryan Tan for a different course that also uses OCaml for the assignments.
 
-A project will consist of several problems, each annotated with the expected level of difficulty (✭ ~ ✭✭✭✭✭).
+Once you have `opam`, you can create a "switch" so that the OCaml version and other dependencies you installed for this course won't contaminate the global environment:
+
+    opam switch create cs160 ocaml-base-compiler.4.13.0
+
+This will create a new switch called `cs160`, and will compile an OCaml compiler inside that switch.

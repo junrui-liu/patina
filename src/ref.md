@@ -19,8 +19,10 @@ Expr      ::= ()
            | INT_CONST
            | ID
            | ( Expr )
+           | - Expr
            | ! Expr
            | Expr ⊕ Expr      ⊕ ∈ { +, -, *, /, &&, ||, ==, !=, >=, >, <=, < }
+           | Sequence
            | if Expr then Sequence else Sequence
            | let ID : Type = Expr
            | while Expr Sequence
