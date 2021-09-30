@@ -14,3 +14,8 @@
   - [Project 3: Type Checking](./projects/proj3.md)
   - [Project 4: Code Generation](./projects/proj4.md)
   - [Project 5: Optimizations](./projects/proj5.md)
+- [Sections](./sections/section.md)
+  - [Section 1](./sections/s1/s1.md)
+    - [Installing `opam`](./sections/s1/opam.md)
+    - [Installing OCaml](./sections/s1/ocaml.md)
+    - [Running OCaml Programs](./sections/s1/run.md)
