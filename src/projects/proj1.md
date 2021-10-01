@@ -1,5 +1,7 @@
 ## Project 1: OCaml
 
+To be released on 10/4. In the meantime, make sure you have OCaml set up.
+<!-- 
 In this project, you will be building a sequence of interpreters of increasing capabilities, each supporting more features of Patina than the previous one. But first, let's get some warm-up with recursion.
 
 
@@ -181,8 +183,8 @@ _Hint_: You may want to use [`ref` cells](https://cs3110.github.io/textbook/chap
 
 ---
 
-<!-- 
-You will gain some familiarity with the full Patina language by writing some short programs and playing with them using a prototype interpreter. -->
 
+You will gain some familiarity with the full Patina language by writing some short programs and playing with them using a prototype interpreter. 
 
-[^1]: This helper function is an example of what's called a [state monad](http://learnyouahaskell.com/for-a-few-monads-more#state), which is a functional way of simulating "state changes" without using mutable variables. (The linked article is for people learning a different functional language called Haskell, but the syntax involved in that particular discussion is quite similar to OCaml's syntax.)
+[^1]: This helper function is an example of what's called a [state monad](http://learnyouahaskell.com/for-a-few-monads-more#state), which is a functional way of simulating "state changes" without using mutable variables. (The linked article is for people learning a different functional language called Haskell, but the syntax involved in that particular discussion is quite similar to OCaml's syntax.) 
+-->
