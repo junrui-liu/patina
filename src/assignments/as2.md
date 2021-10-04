@@ -1,4 +1,4 @@
-## Project 2: Lexing and Parsing
+## CS160 Assignment 2: Lexing and Parsing
 
 ### Part 1
 

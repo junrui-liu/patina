@@ -1,4 +1,4 @@
-## Project 4: Code Generation
+## CS160 Assignment 4: Code Generation
 
 Your compiler will generate x86 assembly code for Patina programs.
 
