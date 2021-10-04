@@ -19,6 +19,10 @@ If you're stuck for more than 15 minutes on a problem, try to ask a general ques
 Respect academic integrity; no sharing solutions, code or otherwise. You may use the internet, but not for finding solutions to these particular problems.
 
 
+## Submission and Grading
+We are working on setting up the autograder. This section will be updated once the submission system is ready.
+
+
 ## Problem 1 \[★\]
 > Goal of this exercise: Practice tuples, options, and recursion over lists.
 
