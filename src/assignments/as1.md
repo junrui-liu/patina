@@ -4,7 +4,7 @@
 
 ## Introduction
 
-In this project, you will get some practice with recursion and pattern matching by building a sequence of interpreters for increasingly large subsets of the Patina programming language.
+In this assignment, you will get some practice with recursion and pattern matching by building a sequence of interpreters for increasingly large subsets of the Patina programming language.
 
 There are 3 main parts to the assignment (Problems 1-3), as well as a bonus problem (Problem 4). For each problem, we'll provide a file containing some starter code. They can be found in the [CS160 GitHub repo](https://github.com/fredfeng/CS160/tree/main/assignments/as1):
 - `assoc.ml` (Problem 1)
@@ -173,7 +173,7 @@ The evaluation rules for the newly added constructs are as follows:
 In the example below,
 - `e1` represents the concrete Patina expression `{ let x: int = 2; x * 3 }`,
 - `e2` represents the concrete Patina expression 
-` { let x: int = 1; { let x: int = 2; x }; x }`
+` { let x: int = -1; { let x: int = 2; x }; x }`
 ```ocaml
 let e1 = 
   Seq [
@@ -199,11 +199,11 @@ let _ = assert (interpret e2 = (-1))
 
 Extend your interpreter in Problem 2 to support the new language constructs. Your `interpret` will have the following type:
 ```ocaml
-let interpret (e: expr) : int = 
+let rec interpret (e: expr) : int = 
   failwith "Not yet implemented" (* your code here *)
 ```
 
-`interpret` itself may or may not be recursive, as long as it has the right type. You may assume that the test cases won't contain semantic or runtime errors, such as reference to unbound variables, or empty sequences.
+You may assume that the test cases won't contain semantic or runtime errors, such as reference to unbound variables, or empty sequences.
 
 > _Hints:_ 
 > 1. You may want to use some kind of environment (recall what you did in Problem 1) to keep track of the values of variables that are in scope:

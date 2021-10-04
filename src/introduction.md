@@ -8,4 +8,4 @@ Patina is an imperative language whose syntax is very similar to the [Rust progr
 [Chapter 2](./ref.md) describes the language more formally, specifying the syntax, dynamic semantics, and static semantics of each language construct.
 
 
-[Chapter 3](./setup/setup.md) walks you through setting up OCaml on your computer, which you will need for the programming projects, described in [Chapter 4](./projects/projects.md). The projects build on each other, and in the end you will have a complete, optimizing compiler that can translate any valid Patina program down to x86 assembly, which your computer will be able to execute.
+[Chapter 3](./setup/setup.md) walks you through setting up OCaml on your computer, which you will need for the programming assignments, described in [Chapter 4](./assignments/assignments.md). The assignments build on each other, and in the end you will have a complete, optimizing compiler that can translate any valid Patina program down to x86 assembly, which your computer will be able to execute.

@@ -26,4 +26,4 @@ print_endline s;;
 
 ### Building an OCaml Project with Multiple Files
 
-You will need a build system, like [dune](https://github.com/ocaml/dune), to manage OCaml programs that spread over more than one file. But for the course projects we will set up everything for you. So no need to worry about this scenario!
+You will need a build system, like [dune](https://github.com/ocaml/dune), to manage OCaml programs that spread over more than one file. But for the course assignments we will set up everything for you. So no need to worry about this scenario!
