@@ -40,8 +40,8 @@ Note that the key's and value's types are not concrete, because the `insert` fun
 You will implement the complementary `lookup_opt` function. It looks like
 ```ocaml
 let rec lookup_opt (k: 'k) (al: ('k * 'v) list) : 'v option =
-  (* your code here *)
-  failwith "Not yet implemented"
+  match al with
+  | _ -> failwith "Not yet implemented" (* your code here *) 
 ```
 To query the value associated with a key `k` in the list, we find the frontmost pair whose key matches `k`, and we return the associated value. 
 However, our query `k` might not be in our list. That's why the return type is `'v option`, instead of `'v`.
@@ -106,7 +106,7 @@ Below are two Patina\\(^{arith}\\) expressions represented as `expr`: `e1` repre
 let e1 =
   Binary (
     Add,
-    Const 1,
+    Const 0,
     Binary (Mul, Const 2, Const 3))
 
 let e2 =
@@ -127,11 +127,10 @@ let rec interpret (e: expr) : int =
 
 and interpret_op (op: binop) : int -> int -> int =
   match op with
-  (* your code here *)
-  failwith "Not yet implemented"
+  | _ -> failwith "Not yet implemented" (* your code here *)
 ```
 
-Here, `interpret` calls a helper function, `interpret_op`, which evaluates binary integer operators (`binop`) to their interpretations as OCaml functions (`int -> int -> int`).
+Here, `interpret` calls a helper function, `interpret_op`, which evaluates binary integer operators (`binop`) to their interpretations as OCaml functions (`int -> int -> int`). The binary operators have the usual interpretations. For instance, `interpret e1` should return `6`, and `interpret e2` should return `7`.
 
 Complete the definition for `interpret_op`.
 
@@ -201,8 +200,7 @@ let _ = assert (interpret e2 = (-1))
 Extend your interpreter in Problem 2 to support the new language constructs. Your `interpret` will have the following type:
 ```ocaml
 let interpret (e: expr) : int = 
-  (* your code here *)
-  failwith "Not yet implemented"
+  failwith "Not yet implemented" (* your code here *)
 ```
 
 `interpret` itself may or may not be recursive, as long as it has the right type. You may assume that the test cases won't contain semantic or runtime errors, such as reference to unbound variables, or empty sequences.
@@ -215,9 +213,9 @@ let interpret (e: expr) : int =
 > 
 > 1. `interpret` itself can be non-recursive, and can call another helper function that actually evaluates the expressions recursively. The helper function may look like:
 >    ```ocaml
->    let rec interpret' (e: expr) (env: environment) : (environment, int) =
->      match e with
->      (* ... *)
+>    let rec interpret' (e: expr) (env: environment) : (environment * int) =
+>       match e with
+>       ...
 >    ```
 >    Compared to `interpret`, the function `interpret'` additionally takes in an `environment`, and additionally > returns an `environment` augmented by `Let` expressions [^1].
 > 
