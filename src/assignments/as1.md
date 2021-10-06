@@ -143,7 +143,7 @@ Complete the definition for `interpret_op`.
 > let three_anonymous =
 >   ( (fun x -> if x then 3 else 6),
 >     (fun x -> fun y -> x ^ y),
->     (fun (a,b,c) -> if a b then a-b else c) )
+>     (fun (a,b,c) -> if a > b then a-b else c) )
 > ```
 > The first takes a `bool` to an `int`, the second concatenates two `string`s, and the third compares integers. You will notice that the second is an anonymous function returning an anonymous function, whereas the third takes all its arguments as a triple. The former format is called "curried" and the latter "uncurried". Be careful to use the right one.
 
