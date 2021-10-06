@@ -2,6 +2,11 @@
 
 **Assignment due: Monday, October 18 11:59PM**
 
+## Changelog
+- Problem 2:
+  - You don't need to worry about division by zero.
+  - `Div` is to be interpreted as integer division.
+
 ## Introduction
 
 In this assignment, you will get some practice with recursion and pattern matching by building a sequence of interpreters for increasingly large subsets of the Patina programming language.
@@ -132,9 +137,9 @@ and interpret_op (op: binop) : int -> int -> int =
   | _ -> failwith "Not yet implemented" (* your code here *)
 ```
 
-Here, `interpret` calls a helper function, `interpret_op`, which evaluates binary integer operators (`binop`) to their interpretations as OCaml functions (`int -> int -> int`). The binary operators have the usual interpretations. For instance, `interpret e1` should return `6`, and `interpret e2` should return `7`.
+Here, `interpret` calls a helper function, `interpret_op`, which evaluates binary integer operators (`binop`) to their interpretations as OCaml functions (`int -> int -> int`). The binary operators have the usual interpretations, and `Div` should be interpreted as integer division. For instance, `interpret e1` should return `6`, and `interpret e2` should return `7`. 
 
-Complete the definition for `interpret_op`.
+Complete the definition for `interpret_op`. You don't need to handle division by zero, since the test cases won't contain input expressions that cause division by zero errors.
 
 > _Hint:_ You are likely to find [anonymous functions](https://cs3110.github.io/textbook/chapters/basics/functions.html?highlight=anonymous#anonymous-functions) helpful here.
 > 
