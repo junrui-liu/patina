@@ -101,7 +101,9 @@ type expr = Const of int
           | Binary of binop * expr * expr
 ```
 
-Below are two Patina\\(^{arith}\\) expressions represented as `expr`: `e1` represents the concrete expression "1 + 2 * 3", while `e2` represents the concrete expression "3 * 4 - 30 / 6":
+Below are two Patina\\(^{arith}\\) expressions represented as `expr`:
+- `e1` represents the concrete expression "0 + 2 * 3"
+- `e2` represents the concrete expression "3 * 4 - 30 / 6"
 ```ocaml
 let e1 =
   Binary (
@@ -139,9 +141,9 @@ Complete the definition for `interpret_op`.
 > As an example, the following variable `three_anonymous` is a tuple of 3 anonymous functions so you can see how they're created:
 > ```ocaml
 > let three_anonymous =
->   ( (fun x -if x then 3 else 6),
->     (fun x -fun y -x ^ y),
->     (fun (a,b,c) -if a b then a-b else c) )
+>   ( (fun x -> if x then 3 else 6),
+>     (fun x -> fun y -> x ^ y),
+>     (fun (a,b,c) -> if a b then a-b else c) )
 > ```
 > The first takes a `bool` to an `int`, the second concatenates two `string`s, and the third compares integers. You will notice that the second is an anonymous function returning an anonymous function, whereas the third takes all its arguments as a triple. The former format is called "curried" and the latter "uncurried". Be careful to use the right one.
 
@@ -217,7 +219,7 @@ You may assume that the test cases won't contain semantic or runtime errors, suc
 >       match e with
 >       ...
 >    ```
->    Compared to `interpret`, the function `interpret'` additionally takes in an `environment`, and additionally > returns an `environment` augmented by `Let` expressions [^1].
+>    Compared to `interpret`, the function `interpret'` additionally takes in an `environment`, and additionally returns an `environment` augmented by `Let` expressions [^1].
 > 
 > 1. Be very careful how `Seq` and your environment interact. If you are unsure, the [Variable Declaration](../overview/unit.html#variable-declaration) section in the Patina language overview contains more examples and explanations.
 
