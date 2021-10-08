@@ -249,7 +249,7 @@ type expr = Const of int
 
 Both `Assign` and `While` evaluate to `0`. A `While` expression is an `expr * expr` pair, where the first item of the pair is the condition, and the second item is the loop body.
 
-Because we don't model booleans here (for simplicity), simply treat the zero value as `true`, and non-zero values as `false`.
+Because we don't model booleans here (for simplicity), simply treat the zero value as `false`, and non-zero values as `true`.
 
 For more information about the semantics of assignment and while expressions, refer to the relevant parts in the section on [Unit Expressions](../overview/unit.html) in the Patina language overview.
 
