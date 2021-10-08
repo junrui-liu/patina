@@ -3,6 +3,8 @@
 **Assignment due: Monday, October 18 11:59PM**
 
 ## Changelog
+- Problem 4:
+  - For `While`'s condition, treat the zero value as false, and non-zero values as true.
 - Problem 2:
   - You don't need to worry about division by zero.
   - `Div` is to be interpreted as integer division.
@@ -246,6 +248,8 @@ type expr = Const of int
 ```
 
 Both `Assign` and `While` evaluate to `0`. A `While` expression is an `expr * expr` pair, where the first item of the pair is the condition, and the second item is the loop body.
+
+Because we don't model booleans here (for simplicity), simply treat the zero value as `true`, and non-zero values as `false`.
 
 For more information about the semantics of assignment and while expressions, refer to the relevant parts in the section on [Unit Expressions](../overview/unit.html) in the Patina language overview.
 
