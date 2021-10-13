@@ -3,6 +3,8 @@
 **Assignment due: Monday, October 18 11:59PM**
 
 ## Changelog
+- Problem 3:
+  - For `Let (x, e)`, further `Let`-bindings created inside `e` will not be inherited.
 - Problem 4:
   - For `While`'s condition, treat the zero value as false, and non-zero values as true.
 - Problem 2:
@@ -27,7 +29,15 @@ Respect academic integrity; no sharing solutions, code or otherwise. You may use
 
 
 ## Submission and Grading
-We are working on setting up the autograder. This section will be updated once the submission system is ready.
+Please submit the following files to [gradescope](https://www.gradescope.com/courses/322641/assignments):
+- `assoc.ml`
+- `patina_arith.ml`
+- `patina_let.ml`
+- `patina_ref.ml`
+
+You are free to leave the assertions in your files uncommented, as long as they don't break your code.
+
+Each test case is worth 1 point.
 
 
 ## Problem 1 \[★\]
@@ -172,7 +182,19 @@ type expr = Const of int
           | Seq of expr list         (* new *)
 ```
 
-A `Let` expression is a `string * expr` pair, where the value of the `expr` will be bound to the `string` name. The name will available in subsequent expressions in the parent `Seq` expression.
+A `Let` expression is a `string * expr` pair, where the value of the `expr` will be bound to the `string` name. The name will available in subsequent expressions in the parent `Seq` expression. Any binding created in the `expr` will not be inherited. For example, the following expression
+```ocaml
+Seq [
+  Let ("x", 0);
+  (* Current environment: x |-> 0 *)
+  
+  Let ("y", Let ("x", 1));
+  (* Current environment: y |-> 0, x |-> 0 *)
+  x
+]
+```
+evaluates to 0, because the second binding of `y` is created in the right-hand side of binding of `x`, hence is ignored.
+
 
 The evaluation rules for the newly added constructs are as follows:
 - A `Let` expression evaluates to `0`.
