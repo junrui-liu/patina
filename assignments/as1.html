@@ -1,0 +1,438 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Assignment 1: OCaml - The Patina Programming Language</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../overview/overview.html"><strong aria-hidden="true">1.</strong> Overview</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../overview/integer.html"><strong aria-hidden="true">1.1.</strong> Integer Expressions</a></li><li class="chapter-item expanded "><a href="../overview/boolean.html"><strong aria-hidden="true">1.2.</strong> Boolean Expressions</a></li><li class="chapter-item expanded "><a href="../overview/unit.html"><strong aria-hidden="true">1.3.</strong> Unit Expressions</a></li><li class="chapter-item expanded "><a href="../overview/arrays.html"><strong aria-hidden="true">1.4.</strong> Arrays</a></li><li class="chapter-item expanded "><a href="../overview/functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li></ol></li><li class="chapter-item expanded "><a href="../ref.html"><strong aria-hidden="true">2.</strong> Reference Manual</a></li><li class="chapter-item expanded "><a href="../setup/setup.html"><strong aria-hidden="true">3.</strong> Setting up OCaml</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../setup/opam.html"><strong aria-hidden="true">3.1.</strong> Installing opam</a></li><li class="chapter-item expanded "><a href="../setup/ocaml.html"><strong aria-hidden="true">3.2.</strong> Installing OCaml</a></li><li class="chapter-item expanded "><a href="../setup/run.html"><strong aria-hidden="true">3.3.</strong> Interacting with OCaml Code</a></li></ol></li><li class="chapter-item expanded "><a href="../assignments/assignments.html"><strong aria-hidden="true">4.</strong> Programming Assignments</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../assignments/as1.html" class="active"><strong aria-hidden="true">4.1.</strong> Assignment 1: OCaml</a></li><li class="chapter-item expanded "><a href="../assignments/as2.html"><strong aria-hidden="true">4.2.</strong> Assignment 2: Lexing and Parsing</a></li><li class="chapter-item expanded "><a href="../assignments/as3.html"><strong aria-hidden="true">4.3.</strong> Assignment 3: Type Checking</a></li><li class="chapter-item expanded "><a href="../assignments/as4.html"><strong aria-hidden="true">4.4.</strong> Assignment 4: Code Generation</a></li><li class="chapter-item expanded "><a href="../assignments/as5.html"><strong aria-hidden="true">4.5.</strong> Assignment 5: Optimizations</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Patina Programming Language</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="cs160-assignment-1-ocaml"><a class="header" href="#cs160-assignment-1-ocaml">CS160 Assignment 1: OCaml</a></h1>
+<p><strong>Assignment due: Monday, October 18 11:59PM</strong></p>
+<h2 id="changelog"><a class="header" href="#changelog">Changelog</a></h2>
+<ul>
+<li>Problem 3:
+<ul>
+<li>For <code>Let (x, e)</code>, further <code>Let</code>-bindings created inside <code>e</code> will not be inherited.</li>
+</ul>
+</li>
+<li>Problem 4:
+<ul>
+<li>For <code>While</code>'s condition, treat the zero value as false, and non-zero values as true.</li>
+</ul>
+</li>
+<li>Problem 2:
+<ul>
+<li>You don't need to worry about division by zero.</li>
+<li><code>Div</code> is to be interpreted as integer division.</li>
+</ul>
+</li>
+</ul>
+<h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
+<p>In this assignment, you will get some practice with recursion and pattern matching by building a sequence of interpreters for increasingly large subsets of the Patina programming language.</p>
+<p>There are 3 main parts to the assignment (Problems 1-3), as well as a bonus problem (Problem 4). For each problem, we'll provide a file containing some starter code. They can be found in the <a href="https://github.com/fredfeng/CS160/tree/main/assignments/as1">CS160 GitHub repo</a>:</p>
+<ul>
+<li><code>assoc.ml</code> (Problem 1)</li>
+<li><code>patina_arith.ml</code> (Problem 2)</li>
+<li><code>patina_let.ml</code> (Problem 3)</li>
+<li><code>patina_ref.ml</code> (Problem 4)</li>
+</ul>
+<p>You will fill in the missing parts of the code that are marked with <code>(* your code here *)</code>.</p>
+<p>If you're stuck for more than 15 minutes on a problem, try to ask a general question on slack, or if you can't, direct message a TA.</p>
+<p>Respect academic integrity; no sharing solutions, code or otherwise. You may use the internet, but not for finding solutions to these particular problems.</p>
+<h2 id="submission-and-grading"><a class="header" href="#submission-and-grading">Submission and Grading</a></h2>
+<p>Please submit the following files to <a href="https://www.gradescope.com/courses/322641/assignments">gradescope</a>:</p>
+<ul>
+<li><code>assoc.ml</code></li>
+<li><code>patina_arith.ml</code></li>
+<li><code>patina_let.ml</code></li>
+<li><code>patina_ref.ml</code></li>
+</ul>
+<p>You are free to leave the assertions in your files uncommented, as long as they don't break your code.</p>
+<p>Each test case is worth 1 point.</p>
+<h2 id="problem-1-"><a class="header" href="#problem-1-">Problem 1 [★]</a></h2>
+<blockquote>
+<p>Goal of this exercise: Practice tuples, options, and recursion over lists.</p>
+</blockquote>
+<p>In this problem, you will implement the <a href="https://en.wikipedia.org/wiki/Association_list">association list</a> data structure, which you may need for a later problem.</p>
+<p>Association lists are the simplest kind of lookup tables. In OCaml, they are <code>('k * 'v) list</code> that map keys of type <code>'k</code> to values of type <code>'v</code>. To insert a key-value pair into an association list, we simply insert the key-value pair to the beginning of the list:</p>
+<pre><code class="language-ocaml">let insert (k: 'k) (v: 'v) (al: ('k * 'v) list) : ('k * 'v) list =
+  (k,v) :: al
+</code></pre>
+<p>That is, <code>insert</code> takes a key and a value, as well as a list of keys and values, and inserts the key-value pair to the beginning of the list.</p>
+<p>Note that the key's and value's types are not concrete, because the <code>insert</code> function is designed to work over any two key value types (an example of <em>polymorphism</em>). However, the list that the key-value pair is being inserted into must be a list of the correct type.</p>
+<p>You will implement the complementary <code>lookup_opt</code> function. It looks like</p>
+<pre><code class="language-ocaml">let rec lookup_opt (k: 'k) (al: ('k * 'v) list) : 'v option =
+  match al with
+  | _ -&gt; failwith &quot;Not yet implemented&quot; (* your code here *) 
+</code></pre>
+<p>To query the value associated with a key <code>k</code> in the list, we find the frontmost pair whose key matches <code>k</code>, and we return the associated value. 
+However, our query <code>k</code> might not be in our list. That's why the return type is <code>'v option</code>, instead of <code>'v</code>.</p>
+<p>In the example below, we insert</p>
+<ul>
+<li><code>(&quot;x&quot;, 1)</code>,</li>
+<li><code>(&quot;y&quot;, 2)</code>,</li>
+<li><code>(&quot;x&quot;, 3)</code></li>
+</ul>
+<p>to the list <code>al</code> sequentially. Because <code>(&quot;x&quot;, 3)</code> is more recent than <code>(&quot;x&quot;, 1)</code>, the lookup <code>lookup_opt &quot;x&quot; al</code> returns the <code>Some 3</code>, instead of <code>Some 1</code>.</p>
+<pre><code class="language-ocaml">let al = insert &quot;x&quot; 3 (insert &quot;y&quot; 2 (insert &quot;x&quot; 1 []))
+(* al is now [(&quot;x&quot;, 3), (&quot;y&quot;, 2), (&quot;x&quot;, 1)] *)
+
+let _ = assert (lookup_opt &quot;z&quot; al = None)
+let _ = assert (lookup_opt &quot;y&quot; al = Some 2)
+let _ = assert (lookup_opt &quot;x&quot; al = Some 3)
+</code></pre>
+<p>Provide a recursive implementation for <code>lookup_opt</code>. Your code may not call any OCaml library functions.</p>
+<blockquote>
+<p><em>Hints:</em></p>
+<ol>
+<li><strong>On <code>option</code> types.</strong> A value of an <code>'a option</code> type can either be <code>None</code>, or <code>Some</code> of some value of type <code>'a</code>. Here is an example demonstrating the <code>option</code> type. If we want to divide integers without risking an exception, one solution is to use option types.
+<pre><code class="language-ocaml">let safe_divide (x: int) (y: int) : int option = 
+  if y = 0 then None else Some (x / y)
+</code></pre>
+</li>
+<li><strong>On recursion.</strong> Recursion is simpler to use than loops in OCaml, and often better. You need to use <code>let rec</code> rather than <code>let</code> to declare a recursive function. Other than that, a function can call itself just as any other function. Here is a recursive function that computes the Hailstone sequence:
+<pre><code class="language-ocaml">let rec hailstone n = 
+  if n = 1 then
+    print_string &quot;1 reached&quot;
+  else if n mod 2 = 1 then
+    hailstone (3*n+1)
+  else
+    hailstone (n / 2)
+</code></pre>
+</li>
+<li><strong>On pattern-matching.</strong> As seen in the course slides, the primary way that you interact with values is by case analysis.
+The syntax for case analysis is via <code>match .. with ..</code> which maps each possible case to the desired expression.
+All values that are part of the case need to be assigned to variables if you want to use them in the expression. For instance, the following function uses pattern matching to sum the first two elements of a list:
+<pre><code class="language-ocaml">let sum_of_first_2_elements (l: int list) : int =
+  match l with
+  | []          -&gt; 0
+  | x :: []     -&gt; x
+  | x :: y :: _ -&gt; x + y
+</code></pre>
+</li>
+</ol>
+</blockquote>
+<hr />
+<h2 id="problem-2-"><a class="header" href="#problem-2-">Problem 2 [★★]</a></h2>
+<blockquote>
+<p>Goal of this exercise: Practice pattern matching and functions as first-class objects.</p>
+</blockquote>
+<p>Patina\(^{arith}\) is a subset of Patina that only contains integer constants and binary expressions. Expressions will be represented in OCaml as abstract syntax trees as follows:</p>
+<pre><code class="language-ocaml">type binop = Add | Sub | Mul | Div
+type expr = Const of int
+          | Binary of binop * expr * expr
+</code></pre>
+<p>Below are two Patina\(^{arith}\) expressions represented as <code>expr</code>:</p>
+<ul>
+<li><code>e1</code> represents the concrete expression &quot;0 + 2 * 3&quot;</li>
+<li><code>e2</code> represents the concrete expression &quot;3 * 4 - 30 / 6&quot;</li>
+</ul>
+<pre><code class="language-ocaml">let e1 =
+  Binary (
+    Add,
+    Const 0,
+    Binary (Mul, Const 2, Const 3))
+
+let e2 =
+  Binary (
+    Sub, 
+    Binary (Mul, Const 3, Const 4),
+    Binary (Div, Const 30, Const 6))
+</code></pre>
+<p>We provide you with a partially complete interpreter for Patina\(^{arith}\). The main interpreter function is <code>interpret</code>, which evaluates a Patina\(^{arith}\) expression to an OCaml integer.</p>
+<pre><code class="language-ocaml">let rec interpret (e: expr) : int =
+  match e with
+  | Const n -&gt; n
+  | Binary (op, e1, e2) -&gt; 
+    (interpret_op op) (interpret e1) (interpret e2)
+
+and interpret_op (op: binop) : int -&gt; int -&gt; int =
+  match op with
+  | _ -&gt; failwith &quot;Not yet implemented&quot; (* your code here *)
+</code></pre>
+<p>Here, <code>interpret</code> calls a helper function, <code>interpret_op</code>, which evaluates binary integer operators (<code>binop</code>) to their interpretations as OCaml functions (<code>int -&gt; int -&gt; int</code>). The binary operators have the usual interpretations, and <code>Div</code> should be interpreted as integer division. For instance, <code>interpret e1</code> should return <code>6</code>, and <code>interpret e2</code> should return <code>7</code>. </p>
+<p>Complete the definition for <code>interpret_op</code>. You don't need to handle division by zero, since the test cases won't contain input expressions that cause division by zero errors.</p>
+<blockquote>
+<p><em>Hint:</em> You are likely to find <a href="https://cs3110.github.io/textbook/chapters/basics/functions.html?highlight=anonymous#anonymous-functions">anonymous functions</a> helpful here.</p>
+<p>As an example, the following variable <code>three_anonymous</code> is a tuple of 3 anonymous functions so you can see how they're created:</p>
+<pre><code class="language-ocaml">let three_anonymous =
+  ( (fun x -&gt; if x then 3 else 6),
+    (fun x -&gt; fun y -&gt; x ^ y),
+    (fun (a,b,c) -&gt; if a &gt; b then a-b else c) )
+</code></pre>
+<p>The first takes a <code>bool</code> to an <code>int</code>, the second concatenates two <code>string</code>s, and the third compares integers. You will notice that the second is an anonymous function returning an anonymous function, whereas the third takes all its arguments as a triple. The former format is called &quot;curried&quot; and the latter &quot;uncurried&quot;. Be careful to use the right one.</p>
+</blockquote>
+<hr />
+<h2 id="problem-3-"><a class="header" href="#problem-3-">Problem 3 [★★★★]</a></h2>
+<blockquote>
+<p>Goal of this exercise: Practice pattern matching and simulating &quot;state changes&quot; in a functional way.</p>
+</blockquote>
+<p>Now let us extend Patina\(^{arith}\) into Patina\(^{let}\), which additionally supports variable bindings and sequences:</p>
+<pre><code class="language-ocaml">type binop = Add | Sub | Mul | Div
+type expr = Const of int
+          | Binary of binop * expr * expr
+          | Id of string             (* new *)
+          | Let of string * expr     (* new *)
+          | Seq of expr list         (* new *)
+</code></pre>
+<p>A <code>Let</code> expression is a <code>string * expr</code> pair, where the value of the <code>expr</code> will be bound to the <code>string</code> name. The name will available in subsequent expressions in the parent <code>Seq</code> expression. Any binding created in the <code>expr</code> will not be inherited. For example, the following expression</p>
+<pre><code class="language-ocaml">Seq [
+  Let (&quot;x&quot;, 0);
+  (* Current environment: x |-&gt; 0 *)
+  
+  Let (&quot;y&quot;, Let (&quot;x&quot;, 1));
+  (* Current environment: y |-&gt; 0, x |-&gt; 0 *)
+  x
+]
+</code></pre>
+<p>evaluates to 0, because the second binding of <code>y</code> is created in the right-hand side of binding of <code>x</code>, hence is ignored.</p>
+<p>The evaluation rules for the newly added constructs are as follows:</p>
+<ul>
+<li>A <code>Let</code> expression evaluates to <code>0</code>.</li>
+<li>A <code>Seq</code> expression evaluates to the value of the last expression in the sequence.</li>
+<li>An <code>Id</code> expression evaluates the value associated with the identifier string.</li>
+</ul>
+<p>In the example below,</p>
+<ul>
+<li><code>e1</code> represents the concrete Patina expression <code>{ let x: int = 2; x * 3 }</code>,</li>
+<li><code>e2</code> represents the concrete Patina expression 
+<code> { let x: int = -1; { let x: int = 2; x }; x }</code></li>
+</ul>
+<pre><code class="language-ocaml">let e1 = 
+  Seq [
+    Let (&quot;x&quot;, Const 2);
+    Binary (Mul, Id &quot;x&quot;, Const 3)
+  ]
+
+let e2 =
+  Seq [
+    Let (&quot;x&quot;, Const (-1));
+    Seq [ Let (&quot;x&quot;, Const 2); Id &quot;x&quot; ];
+    Id &quot;x&quot;
+  ]
+
+let _ = assert (interpret e1 = 6)
+let _ = assert (interpret e2 = (-1))
+</code></pre>
+<p><code>e1</code> evaluates to <code>6</code>, because the let-expression binds <code>&quot;x&quot;</code> to <code>Const 2</code>, and the binary expression <code>Binary (Mul, Id &quot;x&quot;, Const 3)</code> evaluates to <code>6</code> when <code>Id &quot;x&quot;</code> is replaced with <code>Const 2</code>.</p>
+<p><code>e2</code> evaluates to <code>-1</code>, because the last <code>&quot;x&quot;</code> refers to the variable bound in the outer sequence.</p>
+<p>Extend your interpreter in Problem 2 to support the new language constructs. Your <code>interpret</code> will have the following type:</p>
+<pre><code class="language-ocaml">let rec interpret (e: expr) : int = 
+  failwith &quot;Not yet implemented&quot; (* your code here *)
+</code></pre>
+<p>You may assume that the test cases won't contain semantic or runtime errors, such as reference to unbound variables, or empty sequences.</p>
+<blockquote>
+<p><em>Hints:</em> </p>
+<ol>
+<li>
+<p>You may want to use some kind of environment (recall what you did in Problem 1) to keep track of the values of variables that are in scope:</p>
+<pre><code class="language-ocaml">type environment = (string * int) list
+</code></pre>
+</li>
+<li>
+<p><code>interpret</code> itself can be non-recursive, and can call another helper function that actually evaluates the expressions recursively. The helper function may look like:</p>
+<pre><code class="language-ocaml">let rec interpret' (e: expr) (env: environment) : (environment * int) =
+   match e with
+   ...
+</code></pre>
+<p>Compared to <code>interpret</code>, the function <code>interpret'</code> additionally takes in an <code>environment</code>, and additionally returns an <code>environment</code> augmented by <code>Let</code> expressions <sup class="footnote-reference"><a href="#1">1</a></sup>.</p>
+</li>
+<li>
+<p>Be very careful how <code>Seq</code> and your environment interact. If you are unsure, the <a href="../overview/unit.html#variable-declaration">Variable Declaration</a> section in the Patina language overview contains more examples and explanations.</p>
+</li>
+</ol>
+</blockquote>
+<hr />
+<h2 id="bonus-problem-4-"><a class="header" href="#bonus-problem-4-"><em>(Bonus)</em> Problem 4 [★★★]</a></h2>
+<p>Extend your interpreter to support Patina\(^{ref}\), which further supports assignments and while loops:</p>
+<pre><code class="language-ocaml">type binop = Add | Sub | Mul | Div
+type expr = Const of int
+          | Binary of binop * expr * expr
+          | Id of string
+          | Let of string * expr
+          | Seq of expr list
+          | Assign of string * expr    (* new *)
+          | While of expr * expr       (* new *)
+</code></pre>
+<p>Both <code>Assign</code> and <code>While</code> evaluate to <code>0</code>. A <code>While</code> expression is an <code>expr * expr</code> pair, where the first item of the pair is the condition, and the second item is the loop body.</p>
+<p>Because we don't model booleans here (for simplicity), simply treat the zero value as <code>false</code>, and non-zero values as <code>true</code>.</p>
+<p>For more information about the semantics of assignment and while expressions, refer to the relevant parts in the section on <a href="../overview/unit.html">Unit Expressions</a> in the Patina language overview.</p>
+<blockquote>
+<p><em>Hint:</em> You may want to use <a href="https://cs3110.github.io/textbook/chapters/mut/refs.html"><code>ref</code> cells</a> for your environment:</p>
+<pre><code class="language-ocaml">type environment = (string * int ref) list
+</code></pre>
+</blockquote>
+<hr />
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>This helper function is an example of what's called a <a href="http://learnyouahaskell.com/for-a-few-monads-more#state">state monad</a>, which is a functional way of simulating &quot;state changes&quot; without using mutable variables. (The linked article is for people learning a different functional language called Haskell, but the syntax involved in that particular discussion is quite similar to OCaml's syntax.) </p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../assignments/assignments.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../assignments/as2.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../assignments/assignments.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../assignments/as2.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

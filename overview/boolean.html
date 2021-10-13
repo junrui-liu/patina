@@ -1,0 +1,213 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Boolean Expressions - The Patina Programming Language</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../overview/overview.html"><strong aria-hidden="true">1.</strong> Overview</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../overview/integer.html"><strong aria-hidden="true">1.1.</strong> Integer Expressions</a></li><li class="chapter-item expanded "><a href="../overview/boolean.html" class="active"><strong aria-hidden="true">1.2.</strong> Boolean Expressions</a></li><li class="chapter-item expanded "><a href="../overview/unit.html"><strong aria-hidden="true">1.3.</strong> Unit Expressions</a></li><li class="chapter-item expanded "><a href="../overview/arrays.html"><strong aria-hidden="true">1.4.</strong> Arrays</a></li><li class="chapter-item expanded "><a href="../overview/functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li></ol></li><li class="chapter-item expanded "><a href="../ref.html"><strong aria-hidden="true">2.</strong> Reference Manual</a></li><li class="chapter-item expanded "><a href="../setup/setup.html"><strong aria-hidden="true">3.</strong> Setting up OCaml</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../setup/opam.html"><strong aria-hidden="true">3.1.</strong> Installing opam</a></li><li class="chapter-item expanded "><a href="../setup/ocaml.html"><strong aria-hidden="true">3.2.</strong> Installing OCaml</a></li><li class="chapter-item expanded "><a href="../setup/run.html"><strong aria-hidden="true">3.3.</strong> Interacting with OCaml Code</a></li></ol></li><li class="chapter-item expanded "><a href="../assignments/assignments.html"><strong aria-hidden="true">4.</strong> Programming Assignments</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../assignments/as1.html"><strong aria-hidden="true">4.1.</strong> Assignment 1: OCaml</a></li><li class="chapter-item expanded "><a href="../assignments/as2.html"><strong aria-hidden="true">4.2.</strong> Assignment 2: Lexing and Parsing</a></li><li class="chapter-item expanded "><a href="../assignments/as3.html"><strong aria-hidden="true">4.3.</strong> Assignment 3: Type Checking</a></li><li class="chapter-item expanded "><a href="../assignments/as4.html"><strong aria-hidden="true">4.4.</strong> Assignment 4: Code Generation</a></li><li class="chapter-item expanded "><a href="../assignments/as5.html"><strong aria-hidden="true">4.5.</strong> Assignment 5: Optimizations</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Patina Programming Language</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="boolean-expressions"><a class="header" href="#boolean-expressions">Boolean Expressions</a></h2>
+<p>The most basic boolean expressions are boolean constants <code>true</code> and <code>false</code>. More complex boolean expressions can be constructed in two ways:</p>
+<ol>
+<li>by comparing two integer expressions using the <em>comparison operators</em>: <code>==</code> (equal), <code>!=</code> (not equal), <code>&lt;</code> (less than), <code>&gt;</code> (greater than), <code>&lt;=</code> (less than or equal to) and <code>&gt;=</code> (greater than or equal to),</li>
+<li>by composing smaller boolean expressions using the <em>boolean operators</em>: <code>!</code> (not), <code>&amp;&amp;</code> (and), <code>||</code> (or).</li>
+</ol>
+<p>For instance, the following expression evaluates to <code>true</code>:</p>
+<pre><code class="language-rust no_run noplayground">(3 &gt; 4 &amp;&amp; (1 == 1)) || !false
+</code></pre>
+<p>Boolean expressions have type <code>bool</code>.</p>
+<h3 id="branching"><a class="header" href="#branching">Branching</a></h3>
+<p>Patina supports <em>if-then-else expressions</em>, which evaluates to the then-expression when the condition expression evaluates to <code>true</code> or the else-expression otherwise. For example, the expression</p>
+<pre><code class="language-rust no_run noplayground">if 0 &lt;= 1 then {
+  2 + 3
+} else {
+  3 * 4
+}
+</code></pre>
+<p>evaluates to <code>5</code>.<sup class="footnote-reference"><a href="#1">1</a></sup></p>
+<p>Note that it is possible to simulate &quot;else if&quot; clauses by nesting multiple if-then-else. For example,</p>
+<pre><code class="language-rust no_run noplayground">if 0 == 1 then {
+  3
+} else {
+  if 0 == 2 then {
+    5
+  } else {
+    7
+  }
+}
+</code></pre>
+<p>evaluates to <code>7</code>.</p>
+<p>You may have noticed the extra pair of curly braces that enclose the <code>then</code> and the <code>else</code> branch. They are not just there for readability; in fact, <code>{ ... }</code> is another kind of expression in Patina, called <em>sequence expressions</em>. You will learn more about them in the next section.</p>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>For those of you familiar with C++ (or Java), Patina's if-then-else expressions correspond to C++'s conditional expressions. For example, the if-then-else expression here would translate to <code>0&lt;=1 ? (2+3) : (3*4)</code> in C++. Importantly, Patina's if-then-else expressions are different from C++'s if-<em>statements</em>. Statements don't produce values, but expressions do.</p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../overview/integer.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../overview/unit.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../overview/integer.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../overview/unit.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
