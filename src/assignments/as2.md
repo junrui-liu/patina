@@ -2,6 +2,8 @@
 
 **Assignment due: Wednesday, October 27 11:59PM**
 
+## Introduction 
+
 In this assignment, you will first write some toy programs in the Patina language to get more familiar with the language's syntax. Then, you will build a lexer and a parser to parse well-formed Patina programs into abstract syntax trees.
 
 ## Instructions
@@ -11,10 +13,12 @@ In this assignment, you will first write some toy programs in the Patina languag
 2. Unlike Assignment 1, the starter code is no longer individual files, but a self-contained `dune` project. You will need to install `dune` through `opam`:
       
         opam install dune
+    
     There is [guide](https://junrui-liu.github.io/patina/setup/setup.html) on how to install `opam` on your machine or CSIL. If you encounter any difficulty installing `opam` or `dune`, please let us know on Slack.
 
 3. The only files you need to modify are `scanner.mll` and `parser.mly`. 
-4. A driver program (`patina.ml`) is provided to help you test your lexer/parser. You can run the driver on a Patina source file with
+
+4. A driver program (`patina.ml`) is provided to help you test your lexer/parser. It requires `ppx_deriving.show` for pretty printing, which you can install with `opam install ppx_deriving`. Once you have that, you can run the driver on a Patina source file with
       
         dune exec ./patina.exe -- <filename>
 
@@ -24,7 +28,7 @@ We are working on the autograder. This section will be updated once it is ready.
 
 ## Part 1
 
-You will write some simple programs in the Patina language. We'll provide you with a [prototype interpreter](https://github.com/fredfeng/CS160/tree/main/assignments/as2/interpreter) for you to validate your programs. Be aware that the prototype is quite crappy; by the end of this course will have a compiler that's much better than ours.
+You will write some simple programs in the Patina language. We'll provide you with a [prototype interpreter](https://github.com/fredfeng/CS160/tree/main/assignments/as2/interpreter) for you to validate your programs. Be aware that the prototype is quite crappy; by the end of this course will have a compiler that's much better than ours. Use `patina-darwin` if your machine uses macOS, and `patina-linux` if your machine uses Linux (including CSIL).
 
 For each of these, we recommend looking at the [syntax reference](../ref.md) of Patina, as well as the [overview](../overview/overview.md) of Patina in the first section of the page. They should contain all the information that is necessary to complete the assignments. For anything that's unclear after that, ask on Slack!
 
@@ -32,7 +36,15 @@ For each of these, we recommend looking at the [syntax reference](../ref.md) of 
 Write a simple function to practice the oddities of Patina syntax. This function should take an int as argument, create an array with length equal to the integer, fill it with 7s, and then return it. The main function should call this function with 3 as its input and print out the 2nd value in the result.
 
 ### Program 2
-Let's follow up on the section - write a function which creates a list of all the factors of an int, and then sums them together to check whether a number is perfect or not, returning true if it is.
+Let's follow up on the section - write a function that takes in an integer and returns whether or not the integer is a perfect number. You can do so by creating a list of all the factors of the input integer, and then sums them together to check whether a number is perfect or not, returning `true` if it is and `false` otherwise.
+
+In your `main` function, use a while loop to print out perfect numbers up to 1000, each on a new line. For example, if your source file is named `perfect.pt`, then running `./patina-<your-os> -i perfect.pt` should output
+```
+6
+28
+496
+```
+
 
 ## Part 2
 
