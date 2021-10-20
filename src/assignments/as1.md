@@ -29,7 +29,7 @@ Respect academic integrity; no sharing solutions, code or otherwise. You may use
 
 
 ## Submission and Grading
-Please submit the following files to [gradescope](https://www.gradescope.com/courses/322641/assignments):
+Please submit the following files to [Gradescope](https://www.gradescope.com/courses/322641/assignments):
 - `assoc.ml`
 - `patina_arith.ml`
 - `patina_let.ml`
@@ -38,6 +38,8 @@ Please submit the following files to [gradescope](https://www.gradescope.com/cou
 You are free to leave the assertions in your files uncommented, as long as they don't break your code.
 
 Each test case is worth 1 point.
+
+The test cases for the bonus problem will be available soon.
 
 
 ## Problem 1 \[★\]
