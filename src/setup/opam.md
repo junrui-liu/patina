@@ -10,7 +10,7 @@
 `opam` is a little trickier to set up on CSIL. If you don't have an account yet, create one using this [link](https://accounts.engr.ucsb.edu/create).
 
 
-> Note: If you previously had an unsuccessful installation of `opam`, please run `rm -rf ~/.opam` to clean up partial installation before retry the steps below.
+> Note: If you previously had an unsuccessful installation of `opam`, please run `rm -rf ~/.opam` to clean up partial installation before retrying the steps below.
 
 Log onto a CSIL machine (you can do it [remotely](https://ucsb-engr.atlassian.net/wiki/spaces/EPK/pages/575373494/Can+I+remote+log+in+to+CSIL+Linux+from+home)). Once you're logged in, fire up a terminal if you don't have one open, and type the following command to download the `opam` binary:
 ```bash

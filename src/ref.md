@@ -16,7 +16,7 @@ Sequence  ::= { Expr+ }
 Expr+     ::= a non-empty list of "Expr" separated by ";"
 Expr      ::= ()
            | true | false 
-           | INT_CONST
+           | NON_NEG_INT
            | ID
            | ( Expr )
            | - Expr
@@ -31,4 +31,11 @@ Expr      ::= ()
            | ID [ Expr ] = Expr
            | ID ( Expr* )
 Expr*     ::= a list of "Expr" separated by ","
+
+ID          = a letter followed by any number of letters or numbers
 ```
+
+### Precedence and Associativity
+Unary operators have the highest precedence, followed by the arithmetic operators, integer relations, and logical operators, with their usual precedence. That is, multiplication and division have higher precedence than addition and subtraction, and logical conjunction has higher precedence over disjunction.
+
+Operators associate to the left. Relations are non-associative.
