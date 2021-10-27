@@ -32,7 +32,7 @@ Expr      ::= ()
            | ID ( Expr* )
 Expr*     ::= a list of "Expr" separated by ","
 
-ID          = a letter followed by any number of letters or numbers
+ID          = a letter or underscore, followed by any number of letters, numbers, or underscores
 ```
 
 ### Precedence and Associativity

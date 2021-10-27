@@ -1,6 +1,10 @@
 # CS160 Assignment 2: Lexing and Parsing
 
-**Assignment due: Wednesday, October 27 11:59PM**
+**Assignment due: Friday, October 29 11:59PM**
+
+## Changelog
+1. The regular expression for `ID` should match underscores.
+2. Due date has been extended to Friday.
 
 ## Introduction 
 
@@ -28,7 +32,7 @@ We are working on the autograder. This section will be updated once it is ready.
 
 ## Part 1
 
-You will write some simple programs in the Patina language. We'll provide you with a [prototype interpreter](https://github.com/fredfeng/CS160/tree/main/assignments/as2/interpreter) for you to validate your programs. Be aware that the prototype is quite crappy; by the end of this course will have a compiler that's much better than ours. Use `patina-darwin` if your machine uses macOS, and `patina-linux` if your machine uses Linux (including CSIL).
+You will write some simple programs in the Patina language. We'll provide you with a [prototype interpreter](https://github.com/fredfeng/CS160/tree/main/assignments/as2/interpreter) for you to validate your programs. Be aware that the prototype is quite crappy; by the end of this course will have a compiler that's much better than ours. Use `patina-darwin` if your machine uses macOS, and `patina-linux` if your machine uses Linux (including CSIL). Run it with `./patina-<your-os> -i <patina-source-file>`.
 
 For each of these, we recommend looking at the [syntax reference](../ref.md) of Patina, as well as the [overview](../overview/overview.md) of Patina in the first section of the page. They should contain all the information that is necessary to complete the assignments. For anything that's unclear after that, ask on Slack!
 
