@@ -28,7 +28,11 @@ In this assignment, you will first write some toy programs in the Patina languag
 
 
 ## Submission and Grading
-We are working on the autograder. This section will be updated once it is ready.
+Submit your `scanner.mll` and `parser.mly` to [gradescope](https://www.gradescope.com/courses/322641).
+
+Please make sure that your code compiles before submitting them.
+
+There are 21 tests in total, 16 of which are public. You can find the public tests [here](https://github.com/fredfeng/CS160/tree/main/assignments/as2/tests).
 
 ## Part 1
 
