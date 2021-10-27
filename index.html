@@ -140,7 +140,7 @@
 <p><a href="./overview/overview.html">Chapter 1</a> introduces you to the Patina programming language, for which you will be writing your own compiler!</p>
 <p>Patina is an imperative language whose syntax is very similar to the <a href="https://www.rust-lang.org/">Rust programming language</a>. We designed it so that it is big enough to let you write many interesting programs (e.g. your favorite sorting algorithm), but small enough that a compiler for Patina can be implemented in a quarter-long course.</p>
 <p><a href="./ref.html">Chapter 2</a> describes the language more formally, specifying the syntax, dynamic semantics, and static semantics of each language construct.</p>
-<p><a href="./setup/setup.html">Chapter 3</a> walks you through setting up OCaml on your computer, which you will need for the programming assignments, described in <a href="./assignments/assignments.html">Chapter 4</a>. The assignments build on each other, and in the end you will have a complete, optimizing compiler that can translate any valid Patina program down to x86 assembly, which your computer will be able to execute.</p>
+<p><a href="./setup/setup.html">Chapter 3</a> walks you through setting up OCaml on your computer, which you will need for the programming projects, described in <a href="./projects/projects.html">Chapter 4</a>. The projects build on each other, and in the end you will have a complete, optimizing compiler that can translate any valid Patina program down to x86 assembly, which your computer will be able to execute.</p>
 
                     </main>
 
@@ -162,6 +162,20 @@
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
