@@ -136,22 +136,83 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="cs160-assignment-2-lexing-and-parsing"><a class="header" href="#cs160-assignment-2-lexing-and-parsing">CS160 Assignment 2: Lexing and Parsing</a></h2>
-<h3 id="part-1"><a class="header" href="#part-1">Part 1</a></h3>
-<blockquote>
-<p>Goal of this exercise: Familiarizing yourself with the Patina language</p>
-</blockquote>
-<p>You will write some simple programs in the Patina language. We'll provide a prototype interpreter for you to play with. The prototype is quite crappy: it won't have a type checker, and its error handling will be bad. By the end of this course your compiler will be much better than ours. </p>
-<h3 id="part-2"><a class="header" href="#part-2">Part 2</a></h3>
-<blockquote>
-<p>Goal of this exercise: Use the <code>ocamllex</code> lexer generator to write a lexer.</p>
-</blockquote>
-<!-- TODO: Provide a more precise spec here -->
-<h3 id="part-3-parser"><a class="header" href="#part-3-parser">Part 3: Parser</a></h3>
-<blockquote>
-<p>Goal of this exercise: Use the <code>ocamlyacc</code> parser generator to write a parser.</p>
-</blockquote>
-<!-- TODO: Provide a more precise spec here -->
+                        <h1 id="cs160-assignment-2-lexing-and-parsing"><a class="header" href="#cs160-assignment-2-lexing-and-parsing">CS160 Assignment 2: Lexing and Parsing</a></h1>
+<p><strong>Assignment due: Friday, October 29 11:59PM</strong></p>
+<h2 id="changelog"><a class="header" href="#changelog">Changelog</a></h2>
+<ol>
+<li>The regular expression for <code>ID</code> should match underscores.</li>
+<li>Due date has been extended to Friday.</li>
+</ol>
+<h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
+<p>In this assignment, you will first write some toy programs in the Patina language to get more familiar with the language's syntax. Then, you will build a lexer and a parser to parse well-formed Patina programs into abstract syntax trees.</p>
+<h2 id="instructions"><a class="header" href="#instructions">Instructions</a></h2>
+<ol>
+<li>
+<p>Download the starter code <a href="https://github.com/fredfeng/CS160/tree/main/assignments/as2">here</a>.</p>
+</li>
+<li>
+<p>Unlike Assignment 1, the starter code is no longer individual files, but a self-contained <code>dune</code> project. You will need to install <code>dune</code> through <code>opam</code>:</p>
+<pre><code> opam install dune
+</code></pre>
+<p>There is <a href="https://junrui-liu.github.io/patina/setup/setup.html">guide</a> on how to install <code>opam</code> on your machine or CSIL. If you encounter any difficulty installing <code>opam</code> or <code>dune</code>, please let us know on Slack.</p>
+</li>
+<li>
+<p>The only files you need to modify are <code>scanner.mll</code> and <code>parser.mly</code>. </p>
+</li>
+<li>
+<p>A driver program (<code>patina.ml</code>) is provided to help you test your lexer/parser. It requires <code>ppx_deriving.show</code> for pretty printing, which you can install with <code>opam install ppx_deriving</code>. Once you have that, you can run the driver on a Patina source file with</p>
+<pre><code> dune exec ./patina.exe -- &lt;filename&gt;
+</code></pre>
+</li>
+</ol>
+<h2 id="submission-and-grading"><a class="header" href="#submission-and-grading">Submission and Grading</a></h2>
+<p>We are working on the autograder. This section will be updated once it is ready.</p>
+<h2 id="part-1"><a class="header" href="#part-1">Part 1</a></h2>
+<p>You will write some simple programs in the Patina language. We'll provide you with a <a href="https://github.com/fredfeng/CS160/tree/main/assignments/as2/interpreter">prototype interpreter</a> for you to validate your programs. Be aware that the prototype is quite crappy; by the end of this course will have a compiler that's much better than ours. Use <code>patina-darwin</code> if your machine uses macOS, and <code>patina-linux</code> if your machine uses Linux (including CSIL). Run it with <code>./patina-&lt;your-os&gt; -i &lt;patina-source-file&gt;</code>.</p>
+<p>For each of these, we recommend looking at the <a href="../ref.html">syntax reference</a> of Patina, as well as the <a href="../overview/overview.html">overview</a> of Patina in the first section of the page. They should contain all the information that is necessary to complete the assignments. For anything that's unclear after that, ask on Slack!</p>
+<h3 id="program-1"><a class="header" href="#program-1">Program 1</a></h3>
+<p>Write a simple function to practice the oddities of Patina syntax. This function should take an int as argument, create an array with length equal to the integer, fill it with 7s, and then return it. The main function should call this function with 3 as its input and print out the 2nd value in the result.</p>
+<h3 id="program-2"><a class="header" href="#program-2">Program 2</a></h3>
+<p>Let's follow up on the section - write a function that takes in an integer and returns whether or not the integer is a perfect number. You can do so by creating a list of all the factors of the input integer, and then sums them together to check whether a number is perfect or not, returning <code>true</code> if it is and <code>false</code> otherwise.</p>
+<p>In your <code>main</code> function, use a while loop to print out perfect numbers up to 1000, each on a new line. For example, if your source file is named <code>perfect.pt</code>, then running <code>./patina-&lt;your-os&gt; -i perfect.pt</code> should output</p>
+<pre><code>6
+28
+496
+</code></pre>
+<h2 id="part-2"><a class="header" href="#part-2">Part 2</a></h2>
+<p>The first step of a compiler is splitting the string of the whole code into pieces which represent all of the important parts. Since Patina has no syntax for comments, this should be straightforward.</p>
+<p>Ocaml has the very useful tool for doing lexing of <code>ocamllex</code>, which takes a definition of a mapping from token strings to tokens, and produces an automaton that can actually do the lexing. This takes advantage of the insight you've learned in class about how simple enough languages can be parsed with simple automata.</p>
+<p>Each of the lines of code will look something like:</p>
+<pre><code>  | '/'  { DIV }         
+</code></pre>
+<p>Each of these tokens is atomic for the purpose of parsing - it can't be divided further without losing some utility. For example, you don't want to make each digit in an integer a separate token, because you'd have to put them all together when parsing any case where they're used. On the other hand, you wouldn't want to count &quot;(2&quot; as a token, because that parenthesis is going to work just as any other parenthesis in the problem.</p>
+<p>Fill out the rows of your template <code>scanner.mll</code> file to write a lexer for Patina's full syntax.</p>
+<h2 id="part-3-parser"><a class="header" href="#part-3-parser">Part 3: Parser</a></h2>
+<p>Parsing is the central work of this assignment, and the purpose of good lexing is to make parsing easier.</p>
+<p><code>ocamlyacc</code> is a tool which automatically generates a parser for a language if you define how it works. You will use it to parse textual file containing Patina programs into their abstract syntax tree representation.</p>
+<p>Each line of the parser should be inside of a block defining a non-terminal or terminal symbol, and should include both the symbols that make it up on the left, as well as OCaml code (using the constructors of the AST) which represents the value on the right. This value is <em>not</em> the result of interpretation of the code, so no addition or other calculation should be done.</p>
+<p>For example, to say that an expression formed by two sub-expressions separated by the <code>DIV</code> token, we write</p>
+<pre><code>expr:
+    ...
+    | expr DIV expr      { Binary(Div, $1,$3) }
+</code></pre>
+<p>We have defined an abstract syntax tree (AST) type for you in <code>ast.ml</code>, but it's up to you do define the intermediate nodes of parsing. You can use the patina concrete reference not only as a reference of how Patina code looks, but also as hints for what parsing structure to use.</p>
+<p>Modify the template <code>parser.mly</code> file to write a parser for Patina's full syntax. Specifically, you will need to add three kinds of stuff:</p>
+<ol>
+<li>Since the parser is connected to the lexer your wrote for Part 2, you need to declare in the parser file the tokens you defined in the lexer:
+<pre><code>%token // TODO: Your tokens here
+</code></pre>
+</li>
+<li>Define your grammar rules:
+<pre><code>// TODO: Your rules here E.g.
+</code></pre>
+</li>
+<li>Your grammar will likely be ambiguous (i.e. there will be shift/reduce or even reduce/reduce conflicts). You can resolve a lot of ambiguities by simply specifying the <a href="https://ocaml.org/manual/lexyacc.html#ss:ocamlyacc-declarations">precedence and associativity</a> of the elements in your grammar:
+<pre><code>// TODO: Your associativity rules here
+</code></pre>
+</li>
+</ol>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -178,20 +239,6 @@
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3000/__livereload");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

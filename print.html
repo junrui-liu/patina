@@ -141,7 +141,7 @@
 <p><a href="./overview/overview.html">Chapter 1</a> introduces you to the Patina programming language, for which you will be writing your own compiler!</p>
 <p>Patina is an imperative language whose syntax is very similar to the <a href="https://www.rust-lang.org/">Rust programming language</a>. We designed it so that it is big enough to let you write many interesting programs (e.g. your favorite sorting algorithm), but small enough that a compiler for Patina can be implemented in a quarter-long course.</p>
 <p><a href="./ref.html">Chapter 2</a> describes the language more formally, specifying the syntax, dynamic semantics, and static semantics of each language construct.</p>
-<p><a href="./setup/setup.html">Chapter 3</a> walks you through setting up OCaml on your computer, which you will need for the programming projects, described in <a href="./projects/projects.html">Chapter 4</a>. The projects build on each other, and in the end you will have a complete, optimizing compiler that can translate any valid Patina program down to x86 assembly, which your computer will be able to execute.</p>
+<p><a href="./setup/setup.html">Chapter 3</a> walks you through setting up OCaml on your computer, which you will need for the programming assignments, described in <a href="./assignments/assignments.html">Chapter 4</a>. The assignments build on each other, and in the end you will have a complete, optimizing compiler that can translate any valid Patina program down to x86 assembly, which your computer will be able to execute.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="overview"><a class="header" href="#overview">Overview</a></h1>
 <blockquote>
 <p>This chapter gives an informal overview of the Patina language. More precise specifications can be found in the next chapter.</p>
@@ -455,7 +455,7 @@ Sequence  ::= { Expr+ }
 Expr+     ::= a non-empty list of &quot;Expr&quot; separated by &quot;;&quot;
 Expr      ::= ()
            | true | false 
-           | INT_CONST
+           | NON_NEG_INT
            | ID
            | ( Expr )
            | - Expr
@@ -470,7 +470,12 @@ Expr      ::= ()
            | ID [ Expr ] = Expr
            | ID ( Expr* )
 Expr*     ::= a list of &quot;Expr&quot; separated by &quot;,&quot;
+
+ID          = a letter or underscore, followed by any number of letters, numbers, or underscores
 </code></pre>
+<h3 id="precedence-and-associativity"><a class="header" href="#precedence-and-associativity">Precedence and Associativity</a></h3>
+<p>Unary operators have the highest precedence, followed by the arithmetic operators, integer relations, and logical operators, with their usual precedence. That is, multiplication and division have higher precedence than addition and subtraction, and logical conjunction has higher precedence over disjunction.</p>
+<p>Operators associate to the left. Relations are non-associative.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="setting-up-ocaml"><a class="header" href="#setting-up-ocaml">Setting up OCaml</a></h1>
 <p>This guide covers how to set up OCaml on your computer.</p>
 <ol>
@@ -489,18 +494,11 @@ Expr*     ::= a list of &quot;Expr&quot; separated by &quot;,&quot;
 <p>Adapted from <a href="https://github.com/fredfeng/CS162/blob/master/sections/section1/install_ocaml.md">this guide</a> written by Bryan Tan.</p>
 </blockquote>
 <p><code>opam</code> is a package manager for OCaml. You will later use it to install OCaml compilers, interpreters, and other third-party libraries needed for this course.</p>
-<h3 id="installing-for-linux"><a class="header" href="#installing-for-linux">Installing for Linux</a></h3>
-<p>Follow the steps <a href="https://opam.ocaml.org/doc/Install.html#Binary-distribution">here</a>, under the &quot;Binary distribution&quot; section header.</p>
-<h3 id="installing-for-macos"><a class="header" href="#installing-for-macos">Installing for macOS</a></h3>
-<p>If you have <a href="https://brew.sh/">homebrew</a>, just run</p>
-<pre><code>brew install gpatch
-brew install opam
-</code></pre>
-<p>Otherwise, follow the same steps in &quot;Installing for Linux&quot; section.</p>
-<h3 id="installing-for-windows"><a class="header" href="#installing-for-windows">Installing for Windows</a></h3>
-<p>Windows users are recommended to use CSIL instead, since OCaml doesn't work too well on Windows.</p>
-<h3 id="installing-on-csil-machines"><a class="header" href="#installing-on-csil-machines">Installing on CSIL Machines</a></h3>
+<h2 id="installing-on-csil-machines"><a class="header" href="#installing-on-csil-machines">Installing on CSIL Machines</a></h2>
 <p><code>opam</code> is a little trickier to set up on CSIL. If you don't have an account yet, create one using this <a href="https://accounts.engr.ucsb.edu/create">link</a>.</p>
+<blockquote>
+<p>Note: If you previously had an unsuccessful installation of <code>opam</code>, please run <code>rm -rf ~/.opam</code> to clean up partial installation before retrying the steps below.</p>
+</blockquote>
 <p>Log onto a CSIL machine (you can do it <a href="https://ucsb-engr.atlassian.net/wiki/spaces/EPK/pages/575373494/Can+I+remote+log+in+to+CSIL+Linux+from+home">remotely</a>). Once you're logged in, fire up a terminal if you don't have one open, and type the following command to download the <code>opam</code> binary:</p>
 <pre><code class="language-bash">curl -LR 'https://github.com/ocaml/opam/releases/download/2.1.0/opam-2.1.0-x86_64-linux' -o opam
 </code></pre>
@@ -513,7 +511,17 @@ mv opam ~/bin/opam
 <pre><code>[junrui@csil-08 ~]$ opam --version
 2.1.0
 </code></pre>
-<p>Lastly, run <code>opam init</code>. This will take 20-40 minutes because it has to download a bunch of stuff. It will prompt you once or twice afterwards; you can safely respond with Y to make your life more convenient.</p>
+<p>Lastly, run <code>opam init</code>. <strong>This will take 20-40 minutes</strong> because it has to download a bunch of stuff. It will prompt you once or twice afterwards; you can safely respond with Y to make your life more convenient.</p>
+<h2 id="installing-for-non-csil-linux"><a class="header" href="#installing-for-non-csil-linux">Installing for <strong>Non-CSIL</strong> Linux</a></h2>
+<p>Follow the steps <a href="https://opam.ocaml.org/doc/Install.html#Binary-distribution">here</a>, under the &quot;Binary distribution&quot; section header.</p>
+<h2 id="installing-for-macos"><a class="header" href="#installing-for-macos">Installing for macOS</a></h2>
+<p>If you have <a href="https://brew.sh/">homebrew</a>, just run</p>
+<pre><code>brew install gpatch
+brew install opam
+</code></pre>
+<p>Otherwise, follow the same steps in &quot;Installing for Linux&quot; section.</p>
+<h2 id="installing-for-windows"><a class="header" href="#installing-for-windows">Installing for Windows</a></h2>
+<p>Windows users are recommended to use CSIL instead, since OCaml doesn't work too well on Windows.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="installing-ocaml"><a class="header" href="#installing-ocaml">Installing OCaml</a></h2>
 <p>Once you have <code>opam</code>, you can create a &quot;switch&quot; so that anything you installed for this course won't contaminate the global environment.</p>
 <p>Inside your terminal, run</p>
@@ -542,12 +550,31 @@ let _ = print_endline s
 <pre><code>print_endline s;;
 </code></pre>
 <h3 id="building-an-ocaml-project-with-multiple-files"><a class="header" href="#building-an-ocaml-project-with-multiple-files">Building an OCaml Project with Multiple Files</a></h3>
-<p>You will need a build system, like <a href="https://github.com/ocaml/dune">dune</a>, to manage OCaml programs that spread over more than one file. But for the course projects we will set up everything for you. So no need to worry about this scenario!</p>
+<p>You will need a build system, like <a href="https://github.com/ocaml/dune">dune</a>, to manage OCaml programs that spread over more than one file. But for the course assignments we will set up everything for you. So no need to worry about this scenario!</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="programming-assignments"><a class="header" href="#programming-assignments">Programming Assignments</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="cs160-assignment-1-ocaml"><a class="header" href="#cs160-assignment-1-ocaml">CS160 Assignment 1: OCaml</a></h1>
 <p><strong>Assignment due: Monday, October 18 11:59PM</strong></p>
+<h2 id="changelog"><a class="header" href="#changelog">Changelog</a></h2>
+<ul>
+<li>Problem 3:
+<ul>
+<li>For <code>Let (x, e)</code>, further <code>Let</code>-bindings created inside <code>e</code> will not be inherited.</li>
+</ul>
+</li>
+<li>Problem 4:
+<ul>
+<li>For <code>While</code>'s condition, treat the zero value as false, and non-zero values as true.</li>
+</ul>
+</li>
+<li>Problem 2:
+<ul>
+<li>You don't need to worry about division by zero.</li>
+<li><code>Div</code> is to be interpreted as integer division.</li>
+</ul>
+</li>
+</ul>
 <h2 id="introduction-1"><a class="header" href="#introduction-1">Introduction</a></h2>
-<p>In this project, you will get some practice with recursion and pattern matching by building a sequence of interpreters for increasingly large subsets of the Patina programming language.</p>
+<p>In this assignment, you will get some practice with recursion and pattern matching by building a sequence of interpreters for increasingly large subsets of the Patina programming language.</p>
 <p>There are 3 main parts to the assignment (Problems 1-3), as well as a bonus problem (Problem 4). For each problem, we'll provide a file containing some starter code. They can be found in the <a href="https://github.com/fredfeng/CS160/tree/main/assignments/as1">CS160 GitHub repo</a>:</p>
 <ul>
 <li><code>assoc.ml</code> (Problem 1)</li>
@@ -559,7 +586,16 @@ let _ = print_endline s
 <p>If you're stuck for more than 15 minutes on a problem, try to ask a general question on slack, or if you can't, direct message a TA.</p>
 <p>Respect academic integrity; no sharing solutions, code or otherwise. You may use the internet, but not for finding solutions to these particular problems.</p>
 <h2 id="submission-and-grading"><a class="header" href="#submission-and-grading">Submission and Grading</a></h2>
-<p>We are working on setting up the autograder. This section will be updated once the submission system is ready.</p>
+<p>Please submit the following files to <a href="https://www.gradescope.com/courses/322641/assignments">Gradescope</a>:</p>
+<ul>
+<li><code>assoc.ml</code></li>
+<li><code>patina_arith.ml</code></li>
+<li><code>patina_let.ml</code></li>
+<li><code>patina_ref.ml</code></li>
+</ul>
+<p>You are free to leave the assertions in your files uncommented, as long as they don't break your code.</p>
+<p>Each test case is worth 1 point.</p>
+<p>The test cases for the bonus problem will be available soon.</p>
 <h2 id="problem-1-"><a class="header" href="#problem-1-">Problem 1 [★]</a></h2>
 <blockquote>
 <p>Goal of this exercise: Practice tuples, options, and recursion over lists.</p>
@@ -573,8 +609,8 @@ let _ = print_endline s
 <p>Note that the key's and value's types are not concrete, because the <code>insert</code> function is designed to work over any two key value types (an example of <em>polymorphism</em>). However, the list that the key-value pair is being inserted into must be a list of the correct type.</p>
 <p>You will implement the complementary <code>lookup_opt</code> function. It looks like</p>
 <pre><code class="language-ocaml">let rec lookup_opt (k: 'k) (al: ('k * 'v) list) : 'v option =
-  (* your code here *)
-  failwith &quot;Not yet implemented&quot;
+  match al with
+  | _ -&gt; failwith &quot;Not yet implemented&quot; (* your code here *) 
 </code></pre>
 <p>To query the value associated with a key <code>k</code> in the list, we find the frontmost pair whose key matches <code>k</code>, and we return the associated value. 
 However, our query <code>k</code> might not be in our list. That's why the return type is <code>'v option</code>, instead of <code>'v</code>.</p>
@@ -633,7 +669,11 @@ All values that are part of the case need to be assigned to variables if you wan
 type expr = Const of int
           | Binary of binop * expr * expr
 </code></pre>
-<p>Below are two Patina\(^{arith}\) expressions represented as <code>expr</code>: <code>e1</code> represents the concrete expression &quot;1 + 2 * 3&quot;, while <code>e2</code> represents the concrete expression &quot;3 * 4 - 30 / 6&quot;:</p>
+<p>Below are two Patina\(^{arith}\) expressions represented as <code>expr</code>:</p>
+<ul>
+<li><code>e1</code> represents the concrete expression &quot;0 + 2 * 3&quot;</li>
+<li><code>e2</code> represents the concrete expression &quot;3 * 4 - 30 / 6&quot;</li>
+</ul>
 <pre><code class="language-ocaml">let e1 =
   Binary (
     Add,
@@ -655,18 +695,17 @@ let e2 =
 
 and interpret_op (op: binop) : int -&gt; int -&gt; int =
   match op with
-  (* your code here *)
-  | _ -&gt; failwith &quot;Not yet implemented&quot;
+  | _ -&gt; failwith &quot;Not yet implemented&quot; (* your code here *)
 </code></pre>
-<p>Here, <code>interpret</code> calls a helper function, <code>interpret_op</code>, which evaluates binary integer operators (<code>binop</code>) to their interpretations as OCaml functions (<code>int -&gt; int -&gt; int</code>). The binary operators have the usual interpretations. For instance, <code>interpret e1</code> should return <code>6</code>, and <code>interpret e2</code> should return <code>7</code>.</p>
-<p>Complete the definition for <code>interpret_op</code>.</p>
+<p>Here, <code>interpret</code> calls a helper function, <code>interpret_op</code>, which evaluates binary integer operators (<code>binop</code>) to their interpretations as OCaml functions (<code>int -&gt; int -&gt; int</code>). The binary operators have the usual interpretations, and <code>Div</code> should be interpreted as integer division. For instance, <code>interpret e1</code> should return <code>6</code>, and <code>interpret e2</code> should return <code>7</code>. </p>
+<p>Complete the definition for <code>interpret_op</code>. You don't need to handle division by zero, since the test cases won't contain input expressions that cause division by zero errors.</p>
 <blockquote>
 <p><em>Hint:</em> You are likely to find <a href="https://cs3110.github.io/textbook/chapters/basics/functions.html?highlight=anonymous#anonymous-functions">anonymous functions</a> helpful here.</p>
 <p>As an example, the following variable <code>three_anonymous</code> is a tuple of 3 anonymous functions so you can see how they're created:</p>
 <pre><code class="language-ocaml">let three_anonymous =
-  ( (fun x -if x then 3 else 6),
-    (fun x -fun y -x ^ y),
-    (fun (a,b,c) -if a b then a-b else c) )
+  ( (fun x -&gt; if x then 3 else 6),
+    (fun x -&gt; fun y -&gt; x ^ y),
+    (fun (a,b,c) -&gt; if a &gt; b then a-b else c) )
 </code></pre>
 <p>The first takes a <code>bool</code> to an <code>int</code>, the second concatenates two <code>string</code>s, and the third compares integers. You will notice that the second is an anonymous function returning an anonymous function, whereas the third takes all its arguments as a triple. The former format is called &quot;curried&quot; and the latter &quot;uncurried&quot;. Be careful to use the right one.</p>
 </blockquote>
@@ -683,7 +722,17 @@ type expr = Const of int
           | Let of string * expr     (* new *)
           | Seq of expr list         (* new *)
 </code></pre>
-<p>A <code>Let</code> expression is a <code>string * expr</code> pair, where the value of the <code>expr</code> will be bound to the <code>string</code> name. The name will available in subsequent expressions in the parent <code>Seq</code> expression.</p>
+<p>A <code>Let</code> expression is a <code>string * expr</code> pair, where the value of the <code>expr</code> will be bound to the <code>string</code> name. The name will available in subsequent expressions in the parent <code>Seq</code> expression. Any binding created in the <code>expr</code> will not be inherited. For example, the following expression</p>
+<pre><code class="language-ocaml">Seq [
+  Let (&quot;x&quot;, 0);
+  (* Current environment: x |-&gt; 0 *)
+  
+  Let (&quot;y&quot;, Let (&quot;x&quot;, 1));
+  (* Current environment: y |-&gt; 0, x |-&gt; 0 *)
+  x
+]
+</code></pre>
+<p>evaluates to 0, because the second binding of <code>y</code> is created in the right-hand side of binding of <code>x</code>, hence is ignored.</p>
 <p>The evaluation rules for the newly added constructs are as follows:</p>
 <ul>
 <li>A <code>Let</code> expression evaluates to <code>0</code>.</li>
@@ -694,7 +743,7 @@ type expr = Const of int
 <ul>
 <li><code>e1</code> represents the concrete Patina expression <code>{ let x: int = 2; x * 3 }</code>,</li>
 <li><code>e2</code> represents the concrete Patina expression 
-<code> { let x: int = 1; { let x: int = 2; x }; x }</code></li>
+<code> { let x: int = -1; { let x: int = 2; x }; x }</code></li>
 </ul>
 <pre><code class="language-ocaml">let e1 = 
   Seq [
@@ -715,11 +764,10 @@ let _ = assert (interpret e2 = (-1))
 <p><code>e1</code> evaluates to <code>6</code>, because the let-expression binds <code>&quot;x&quot;</code> to <code>Const 2</code>, and the binary expression <code>Binary (Mul, Id &quot;x&quot;, Const 3)</code> evaluates to <code>6</code> when <code>Id &quot;x&quot;</code> is replaced with <code>Const 2</code>.</p>
 <p><code>e2</code> evaluates to <code>-1</code>, because the last <code>&quot;x&quot;</code> refers to the variable bound in the outer sequence.</p>
 <p>Extend your interpreter in Problem 2 to support the new language constructs. Your <code>interpret</code> will have the following type:</p>
-<pre><code class="language-ocaml">let interpret (e: expr) : int = 
-  (* your code here *)
-  failwith &quot;Not yet implemented&quot;
+<pre><code class="language-ocaml">let rec interpret (e: expr) : int = 
+  failwith &quot;Not yet implemented&quot; (* your code here *)
 </code></pre>
-<p><code>interpret</code> itself may or may not be recursive, as long as it has the right type. You may assume that the test cases won't contain semantic or runtime errors, such as reference to unbound variables, or empty sequences.</p>
+<p>You may assume that the test cases won't contain semantic or runtime errors, such as reference to unbound variables, or empty sequences.</p>
 <blockquote>
 <p><em>Hints:</em> </p>
 <ol>
@@ -730,11 +778,11 @@ let _ = assert (interpret e2 = (-1))
 </li>
 <li>
 <p><code>interpret</code> itself can be non-recursive, and can call another helper function that actually evaluates the expressions recursively. The helper function may look like:</p>
-<pre><code class="language-ocaml">let rec interpret' (e: expr) (env: environment) : (environment, int) =
+<pre><code class="language-ocaml">let rec interpret' (e: expr) (env: environment) : (environment * int) =
    match e with
    ...
 </code></pre>
-<p>Compared to <code>interpret</code>, the function <code>interpret'</code> additionally takes in an <code>environment</code>, and additionally &gt; returns an <code>environment</code> augmented by <code>Let</code> expressions <sup class="footnote-reference"><a href="#1">1</a></sup>.</p>
+<p>Compared to <code>interpret</code>, the function <code>interpret'</code> additionally takes in an <code>environment</code>, and additionally returns an <code>environment</code> augmented by <code>Let</code> expressions <sup class="footnote-reference"><a href="#1">1</a></sup>.</p>
 </li>
 <li>
 <p>Be very careful how <code>Seq</code> and your environment interact. If you are unsure, the <a href="assignments/../overview/unit.html#variable-declaration">Variable Declaration</a> section in the Patina language overview contains more examples and explanations.</p>
@@ -754,6 +802,7 @@ type expr = Const of int
           | While of expr * expr       (* new *)
 </code></pre>
 <p>Both <code>Assign</code> and <code>While</code> evaluate to <code>0</code>. A <code>While</code> expression is an <code>expr * expr</code> pair, where the first item of the pair is the condition, and the second item is the loop body.</p>
+<p>Because we don't model booleans here (for simplicity), simply treat the zero value as <code>false</code>, and non-zero values as <code>true</code>.</p>
 <p>For more information about the semantics of assignment and while expressions, refer to the relevant parts in the section on <a href="assignments/../overview/unit.html">Unit Expressions</a> in the Patina language overview.</p>
 <blockquote>
 <p><em>Hint:</em> You may want to use <a href="https://cs3110.github.io/textbook/chapters/mut/refs.html"><code>ref</code> cells</a> for your environment:</p>
@@ -764,22 +813,83 @@ type expr = Const of int
 <div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
 <p>This helper function is an example of what's called a <a href="http://learnyouahaskell.com/for-a-few-monads-more#state">state monad</a>, which is a functional way of simulating &quot;state changes&quot; without using mutable variables. (The linked article is for people learning a different functional language called Haskell, but the syntax involved in that particular discussion is quite similar to OCaml's syntax.) </p>
 </div>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="cs160-assignment-2-lexing-and-parsing"><a class="header" href="#cs160-assignment-2-lexing-and-parsing">CS160 Assignment 2: Lexing and Parsing</a></h2>
-<h3 id="part-1"><a class="header" href="#part-1">Part 1</a></h3>
-<blockquote>
-<p>Goal of this exercise: Familiarizing yourself with the Patina language</p>
-</blockquote>
-<p>You will write some simple programs in the Patina language. We'll provide a prototype interpreter for you to play with. The prototype is quite crappy: it won't have a type checker, and its error handling will be bad. By the end of this course your compiler will be much better than ours. </p>
-<h3 id="part-2"><a class="header" href="#part-2">Part 2</a></h3>
-<blockquote>
-<p>Goal of this exercise: Use the <code>ocamllex</code> lexer generator to write a lexer.</p>
-</blockquote>
-<!-- TODO: Provide a more precise spec here -->
-<h3 id="part-3-parser"><a class="header" href="#part-3-parser">Part 3: Parser</a></h3>
-<blockquote>
-<p>Goal of this exercise: Use the <code>ocamlyacc</code> parser generator to write a parser.</p>
-</blockquote>
-<!-- TODO: Provide a more precise spec here --><div style="break-before: page; page-break-before: always;"></div><h2 id="cs160-assignment-3-type-checking"><a class="header" href="#cs160-assignment-3-type-checking">CS160 Assignment 3: Type Checking</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cs160-assignment-2-lexing-and-parsing"><a class="header" href="#cs160-assignment-2-lexing-and-parsing">CS160 Assignment 2: Lexing and Parsing</a></h1>
+<p><strong>Assignment due: Friday, October 29 11:59PM</strong></p>
+<h2 id="changelog-1"><a class="header" href="#changelog-1">Changelog</a></h2>
+<ol>
+<li>The regular expression for <code>ID</code> should match underscores.</li>
+<li>Due date has been extended to Friday.</li>
+</ol>
+<h2 id="introduction-2"><a class="header" href="#introduction-2">Introduction</a></h2>
+<p>In this assignment, you will first write some toy programs in the Patina language to get more familiar with the language's syntax. Then, you will build a lexer and a parser to parse well-formed Patina programs into abstract syntax trees.</p>
+<h2 id="instructions"><a class="header" href="#instructions">Instructions</a></h2>
+<ol>
+<li>
+<p>Download the starter code <a href="https://github.com/fredfeng/CS160/tree/main/assignments/as2">here</a>.</p>
+</li>
+<li>
+<p>Unlike Assignment 1, the starter code is no longer individual files, but a self-contained <code>dune</code> project. You will need to install <code>dune</code> through <code>opam</code>:</p>
+<pre><code> opam install dune
+</code></pre>
+<p>There is <a href="https://junrui-liu.github.io/patina/setup/setup.html">guide</a> on how to install <code>opam</code> on your machine or CSIL. If you encounter any difficulty installing <code>opam</code> or <code>dune</code>, please let us know on Slack.</p>
+</li>
+<li>
+<p>The only files you need to modify are <code>scanner.mll</code> and <code>parser.mly</code>. </p>
+</li>
+<li>
+<p>A driver program (<code>patina.ml</code>) is provided to help you test your lexer/parser. It requires <code>ppx_deriving.show</code> for pretty printing, which you can install with <code>opam install ppx_deriving</code>. Once you have that, you can run the driver on a Patina source file with</p>
+<pre><code> dune exec ./patina.exe -- &lt;filename&gt;
+</code></pre>
+</li>
+</ol>
+<h2 id="submission-and-grading-1"><a class="header" href="#submission-and-grading-1">Submission and Grading</a></h2>
+<p>We are working on the autograder. This section will be updated once it is ready.</p>
+<h2 id="part-1"><a class="header" href="#part-1">Part 1</a></h2>
+<p>You will write some simple programs in the Patina language. We'll provide you with a <a href="https://github.com/fredfeng/CS160/tree/main/assignments/as2/interpreter">prototype interpreter</a> for you to validate your programs. Be aware that the prototype is quite crappy; by the end of this course will have a compiler that's much better than ours. Use <code>patina-darwin</code> if your machine uses macOS, and <code>patina-linux</code> if your machine uses Linux (including CSIL). Run it with <code>./patina-&lt;your-os&gt; -i &lt;patina-source-file&gt;</code>.</p>
+<p>For each of these, we recommend looking at the <a href="assignments/../ref.html">syntax reference</a> of Patina, as well as the <a href="assignments/../overview/overview.html">overview</a> of Patina in the first section of the page. They should contain all the information that is necessary to complete the assignments. For anything that's unclear after that, ask on Slack!</p>
+<h3 id="program-1"><a class="header" href="#program-1">Program 1</a></h3>
+<p>Write a simple function to practice the oddities of Patina syntax. This function should take an int as argument, create an array with length equal to the integer, fill it with 7s, and then return it. The main function should call this function with 3 as its input and print out the 2nd value in the result.</p>
+<h3 id="program-2"><a class="header" href="#program-2">Program 2</a></h3>
+<p>Let's follow up on the section - write a function that takes in an integer and returns whether or not the integer is a perfect number. You can do so by creating a list of all the factors of the input integer, and then sums them together to check whether a number is perfect or not, returning <code>true</code> if it is and <code>false</code> otherwise.</p>
+<p>In your <code>main</code> function, use a while loop to print out perfect numbers up to 1000, each on a new line. For example, if your source file is named <code>perfect.pt</code>, then running <code>./patina-&lt;your-os&gt; -i perfect.pt</code> should output</p>
+<pre><code>6
+28
+496
+</code></pre>
+<h2 id="part-2"><a class="header" href="#part-2">Part 2</a></h2>
+<p>The first step of a compiler is splitting the string of the whole code into pieces which represent all of the important parts. Since Patina has no syntax for comments, this should be straightforward.</p>
+<p>Ocaml has the very useful tool for doing lexing of <code>ocamllex</code>, which takes a definition of a mapping from token strings to tokens, and produces an automaton that can actually do the lexing. This takes advantage of the insight you've learned in class about how simple enough languages can be parsed with simple automata.</p>
+<p>Each of the lines of code will look something like:</p>
+<pre><code>  | '/'  { DIV }         
+</code></pre>
+<p>Each of these tokens is atomic for the purpose of parsing - it can't be divided further without losing some utility. For example, you don't want to make each digit in an integer a separate token, because you'd have to put them all together when parsing any case where they're used. On the other hand, you wouldn't want to count &quot;(2&quot; as a token, because that parenthesis is going to work just as any other parenthesis in the problem.</p>
+<p>Fill out the rows of your template <code>scanner.mll</code> file to write a lexer for Patina's full syntax.</p>
+<h2 id="part-3-parser"><a class="header" href="#part-3-parser">Part 3: Parser</a></h2>
+<p>Parsing is the central work of this assignment, and the purpose of good lexing is to make parsing easier.</p>
+<p><code>ocamlyacc</code> is a tool which automatically generates a parser for a language if you define how it works. You will use it to parse textual file containing Patina programs into their abstract syntax tree representation.</p>
+<p>Each line of the parser should be inside of a block defining a non-terminal or terminal symbol, and should include both the symbols that make it up on the left, as well as OCaml code (using the constructors of the AST) which represents the value on the right. This value is <em>not</em> the result of interpretation of the code, so no addition or other calculation should be done.</p>
+<p>For example, to say that an expression formed by two sub-expressions separated by the <code>DIV</code> token, we write</p>
+<pre><code>expr:
+    ...
+    | expr DIV expr      { Binary(Div, $1,$3) }
+</code></pre>
+<p>We have defined an abstract syntax tree (AST) type for you in <code>ast.ml</code>, but it's up to you do define the intermediate nodes of parsing. You can use the patina concrete reference not only as a reference of how Patina code looks, but also as hints for what parsing structure to use.</p>
+<p>Modify the template <code>parser.mly</code> file to write a parser for Patina's full syntax. Specifically, you will need to add three kinds of stuff:</p>
+<ol>
+<li>Since the parser is connected to the lexer your wrote for Part 2, you need to declare in the parser file the tokens you defined in the lexer:
+<pre><code>%token // TODO: Your tokens here
+</code></pre>
+</li>
+<li>Define your grammar rules:
+<pre><code>// TODO: Your rules here E.g.
+</code></pre>
+</li>
+<li>Your grammar will likely be ambiguous (i.e. there will be shift/reduce or even reduce/reduce conflicts). You can resolve a lot of ambiguities by simply specifying the <a href="https://ocaml.org/manual/lexyacc.html#ss:ocamlyacc-declarations">precedence and associativity</a> of the elements in your grammar:
+<pre><code>// TODO: Your associativity rules here
+</code></pre>
+</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="cs160-assignment-3-type-checking"><a class="header" href="#cs160-assignment-3-type-checking">CS160 Assignment 3: Type Checking</a></h2>
 <!-- TODO: Formalize the typing rules for Patina --><div style="break-before: page; page-break-before: always;"></div><h2 id="cs160-assignment-4-code-generation"><a class="header" href="#cs160-assignment-4-code-generation">CS160 Assignment 4: Code Generation</a></h2>
 <p>Your compiler will generate x86 assembly code for Patina programs.</p>
 <!-- TODO: Provide a more precise specification of the dynamic semantics of Patina --><div style="break-before: page; page-break-before: always;"></div><h2 id="cs160-assignment-5-optimizations"><a class="header" href="#cs160-assignment-5-optimizations">CS160 Assignment 5: Optimizations</a></h2>
@@ -798,20 +908,6 @@ type expr = Const of int
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3000/__livereload");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

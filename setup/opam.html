@@ -141,18 +141,11 @@
 <p>Adapted from <a href="https://github.com/fredfeng/CS162/blob/master/sections/section1/install_ocaml.md">this guide</a> written by Bryan Tan.</p>
 </blockquote>
 <p><code>opam</code> is a package manager for OCaml. You will later use it to install OCaml compilers, interpreters, and other third-party libraries needed for this course.</p>
-<h3 id="installing-for-linux"><a class="header" href="#installing-for-linux">Installing for Linux</a></h3>
-<p>Follow the steps <a href="https://opam.ocaml.org/doc/Install.html#Binary-distribution">here</a>, under the &quot;Binary distribution&quot; section header.</p>
-<h3 id="installing-for-macos"><a class="header" href="#installing-for-macos">Installing for macOS</a></h3>
-<p>If you have <a href="https://brew.sh/">homebrew</a>, just run</p>
-<pre><code>brew install gpatch
-brew install opam
-</code></pre>
-<p>Otherwise, follow the same steps in &quot;Installing for Linux&quot; section.</p>
-<h3 id="installing-for-windows"><a class="header" href="#installing-for-windows">Installing for Windows</a></h3>
-<p>Windows users are recommended to use CSIL instead, since OCaml doesn't work too well on Windows.</p>
-<h3 id="installing-on-csil-machines"><a class="header" href="#installing-on-csil-machines">Installing on CSIL Machines</a></h3>
+<h2 id="installing-on-csil-machines"><a class="header" href="#installing-on-csil-machines">Installing on CSIL Machines</a></h2>
 <p><code>opam</code> is a little trickier to set up on CSIL. If you don't have an account yet, create one using this <a href="https://accounts.engr.ucsb.edu/create">link</a>.</p>
+<blockquote>
+<p>Note: If you previously had an unsuccessful installation of <code>opam</code>, please run <code>rm -rf ~/.opam</code> to clean up partial installation before retrying the steps below.</p>
+</blockquote>
 <p>Log onto a CSIL machine (you can do it <a href="https://ucsb-engr.atlassian.net/wiki/spaces/EPK/pages/575373494/Can+I+remote+log+in+to+CSIL+Linux+from+home">remotely</a>). Once you're logged in, fire up a terminal if you don't have one open, and type the following command to download the <code>opam</code> binary:</p>
 <pre><code class="language-bash">curl -LR 'https://github.com/ocaml/opam/releases/download/2.1.0/opam-2.1.0-x86_64-linux' -o opam
 </code></pre>
@@ -165,7 +158,17 @@ mv opam ~/bin/opam
 <pre><code>[junrui@csil-08 ~]$ opam --version
 2.1.0
 </code></pre>
-<p>Lastly, run <code>opam init</code>. This will take 20-40 minutes because it has to download a bunch of stuff. It will prompt you once or twice afterwards; you can safely respond with Y to make your life more convenient.</p>
+<p>Lastly, run <code>opam init</code>. <strong>This will take 20-40 minutes</strong> because it has to download a bunch of stuff. It will prompt you once or twice afterwards; you can safely respond with Y to make your life more convenient.</p>
+<h2 id="installing-for-non-csil-linux"><a class="header" href="#installing-for-non-csil-linux">Installing for <strong>Non-CSIL</strong> Linux</a></h2>
+<p>Follow the steps <a href="https://opam.ocaml.org/doc/Install.html#Binary-distribution">here</a>, under the &quot;Binary distribution&quot; section header.</p>
+<h2 id="installing-for-macos"><a class="header" href="#installing-for-macos">Installing for macOS</a></h2>
+<p>If you have <a href="https://brew.sh/">homebrew</a>, just run</p>
+<pre><code>brew install gpatch
+brew install opam
+</code></pre>
+<p>Otherwise, follow the same steps in &quot;Installing for Linux&quot; section.</p>
+<h2 id="installing-for-windows"><a class="header" href="#installing-for-windows">Installing for Windows</a></h2>
+<p>Windows users are recommended to use CSIL instead, since OCaml doesn't work too well on Windows.</p>
 
                     </main>
 
@@ -193,20 +196,6 @@ mv opam ~/bin/opam
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3000/__livereload");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

@@ -152,7 +152,7 @@ let _ = print_endline s
 <pre><code>print_endline s;;
 </code></pre>
 <h3 id="building-an-ocaml-project-with-multiple-files"><a class="header" href="#building-an-ocaml-project-with-multiple-files">Building an OCaml Project with Multiple Files</a></h3>
-<p>You will need a build system, like <a href="https://github.com/ocaml/dune">dune</a>, to manage OCaml programs that spread over more than one file. But for the course projects we will set up everything for you. So no need to worry about this scenario!</p>
+<p>You will need a build system, like <a href="https://github.com/ocaml/dune">dune</a>, to manage OCaml programs that spread over more than one file. But for the course assignments we will set up everything for you. So no need to worry about this scenario!</p>
 
                     </main>
 
@@ -180,20 +180,6 @@ let _ = print_endline s
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3000/__livereload");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

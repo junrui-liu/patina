@@ -151,7 +151,7 @@ Sequence  ::= { Expr+ }
 Expr+     ::= a non-empty list of &quot;Expr&quot; separated by &quot;;&quot;
 Expr      ::= ()
            | true | false 
-           | INT_CONST
+           | NON_NEG_INT
            | ID
            | ( Expr )
            | - Expr
@@ -166,7 +166,12 @@ Expr      ::= ()
            | ID [ Expr ] = Expr
            | ID ( Expr* )
 Expr*     ::= a list of &quot;Expr&quot; separated by &quot;,&quot;
+
+ID          = a letter or underscore, followed by any number of letters, numbers, or underscores
 </code></pre>
+<h3 id="precedence-and-associativity"><a class="header" href="#precedence-and-associativity">Precedence and Associativity</a></h3>
+<p>Unary operators have the highest precedence, followed by the arithmetic operators, integer relations, and logical operators, with their usual precedence. That is, multiplication and division have higher precedence than addition and subtraction, and logical conjunction has higher precedence over disjunction.</p>
+<p>Operators associate to the left. Relations are non-associative.</p>
 
                     </main>
 
@@ -194,20 +199,6 @@ Expr*     ::= a list of &quot;Expr&quot; separated by &quot;,&quot;
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3000/__livereload");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
