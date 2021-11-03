@@ -476,6 +476,10 @@ ID          = a letter or underscore, followed by any number of letters, numbers
 <h3 id="precedence-and-associativity"><a class="header" href="#precedence-and-associativity">Precedence and Associativity</a></h3>
 <p>Unary operators have the highest precedence, followed by the arithmetic operators, integer relations, and logical operators, with their usual precedence. That is, multiplication and division have higher precedence than addition and subtraction, and logical conjunction has higher precedence over disjunction.</p>
 <p>Operators associate to the left. Relations are non-associative.</p>
+<h2 id="typing-rules"><a class="header" href="#typing-rules">Typing Rules</a></h2>
+<h3 id="changelog"><a class="header" href="#changelog">Changelog</a></h3>
+<p>None</p>
+<p>Please view the typing rules <a href="https://github.com/fredfeng/CS160/blob/main/assignments/as3/types/type.pdf">here</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="setting-up-ocaml"><a class="header" href="#setting-up-ocaml">Setting up OCaml</a></h1>
 <p>This guide covers how to set up OCaml on your computer.</p>
 <ol>
@@ -554,7 +558,7 @@ let _ = print_endline s
 <div style="break-before: page; page-break-before: always;"></div><h1 id="programming-assignments"><a class="header" href="#programming-assignments">Programming Assignments</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="cs160-assignment-1-ocaml"><a class="header" href="#cs160-assignment-1-ocaml">CS160 Assignment 1: OCaml</a></h1>
 <p><strong>Assignment due: Monday, October 18 11:59PM</strong></p>
-<h2 id="changelog"><a class="header" href="#changelog">Changelog</a></h2>
+<h2 id="changelog-1"><a class="header" href="#changelog-1">Changelog</a></h2>
 <ul>
 <li>Problem 3:
 <ul>
@@ -815,7 +819,7 @@ type expr = Const of int
 </div>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="cs160-assignment-2-lexing-and-parsing"><a class="header" href="#cs160-assignment-2-lexing-and-parsing">CS160 Assignment 2: Lexing and Parsing</a></h1>
 <p><strong>Assignment due: Friday, October 29 11:59PM</strong></p>
-<h2 id="changelog-1"><a class="header" href="#changelog-1">Changelog</a></h2>
+<h2 id="changelog-2"><a class="header" href="#changelog-2">Changelog</a></h2>
 <ol>
 <li>The regular expression for <code>ID</code> should match underscores.</li>
 <li>Due date has been extended to Friday.</li>
@@ -891,8 +895,56 @@ type expr = Const of int
 </code></pre>
 </li>
 </ol>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="cs160-assignment-3-type-checking"><a class="header" href="#cs160-assignment-3-type-checking">CS160 Assignment 3: Type Checking</a></h2>
-<!-- TODO: Formalize the typing rules for Patina --><div style="break-before: page; page-break-before: always;"></div><h2 id="cs160-assignment-4-code-generation"><a class="header" href="#cs160-assignment-4-code-generation">CS160 Assignment 4: Code Generation</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cs160-assignment-3-type-checking"><a class="header" href="#cs160-assignment-3-type-checking">CS160 Assignment 3: Type Checking</a></h1>
+<p><strong>Assignment due: TBD</strong></p>
+<p>In this assignment, you will implement a type checker for you Patina compiler.</p>
+<h2 id="instructions-1"><a class="header" href="#instructions-1">Instructions</a></h2>
+<ol>
+<li>Download the starter code <a href="https://github.com/fredfeng/CS160/blob/main/assignments/as3/as3.zip">here</a>.</li>
+<li>Make sure you have installed <code>dune</code> and <code>ppx_deriving</code> via <code>opam</code>, as required in AS2. You don't need to install anything new for this assignment. </li>
+<li>Replace <code>scanner.mll</code> and <code>parser.mly</code> with your own implementation from AS2.</li>
+<li>Complete the type checker in <code>typecheck.ml</code> (described in greater details later).</li>
+<li>As in the previous assignment, we provide you with a driver program (<code>patina.ml</code>) that takes in Patina source files and invokes your parser and type checker on them. Run the driver program with
+<pre><code>dune exec ./patina.exe -- &lt;patina-source-file&gt; 
+</code></pre>
+</li>
+</ol>
+<h2 id="submission-and-grading-2"><a class="header" href="#submission-and-grading-2">Submission and Grading</a></h2>
+<p>We will update this section once the autograder is ready.</p>
+<h2 id="what-you-need-to-implement"><a class="header" href="#what-you-need-to-implement">What You Need to Implement</a></h2>
+<blockquote>
+<p>If you are feeling adventurous, you can start with an empty <code>typecheck.ml</code> file and build your type checker from scratch. The only requirement is that the file should export a function called <code>check_prog</code> with the following signature:</p>
+<pre><code class="language-ocaml">val check_prog : Ast.prog -&gt; unit
+</code></pre>
+<p>That is, this function takes in an <code>Ast.prog</code>, and returns unit if there's no type error, and raises <code>Error.TypeError</code> otherwise.</p>
+</blockquote>
+<p>You will implement the typing rules described in the <a href="https://junrui-liu.github.io/patina/ref.html#typing-rules">reference manual</a>, as well as a few more semantic checks.</p>
+<p>The <code>typecheck.ml</code> file contains a skeleton of the type checking algorithm. On a high level, it is quite similar to the <code>interpret'</code> function you wrote in AS1:</p>
+<ul>
+<li>The main type checking function, <code>check</code>, takes in an expression and some environment, and outputs a pair consisting of a new environment and some <code>result</code>.</li>
+<li>Previously, the <code>result</code> type was <code>int</code>, because your interpreter was evaluating the input expression to an integer. Now the <code>result</code> type is <code>Ast.typ</code> (which can be either <code>TUnit</code>, <code>TBool</code>, <code>TInt</code>, or <code>TArr</code>), because the type checker computes the type of the input expression (if the expression is well-typed).</li>
+<li>Previously, the <code>environment</code> type was <code>(string * int) list</code>, which maps identifiers to their integer values<sup class="footnote-reference"><a href="#1">1</a></sup>. Now the environment is called <code>tenv</code>, which stands for <strong>t</strong>yping <strong>env</strong>ironment. This is the $\Gamma$ you have encountered in the typing rules, which maps identifiers to their declared types. The <code>check</code> function also takes in a <strong>f</strong>unction <strong>env</strong>ironment, which is the $\Delta$ in the typing rules.</li>
+</ul>
+<p>The structure of <code>check</code> is also quite similar to <code>interpret'</code>. It traverses the AST in a post-order/bottom-up manner, by pattern-matching on the input expression, recursively type-checking the sub-expressions (if any), and aggregates the types of the sub-expressions. You can see a concrete example in the partially written cases we've provided. For example, in the case of unary <code>Not</code> expressions,</p>
+<pre><code class="language-ocaml">| Unary (Not, e) -&gt;
+    let te = type_of e in
+    expect e TBool te;
+    return TBool
+</code></pre>
+<p>we first recursively type check the sub-expressions <code>e</code>. Then we assert that <code>e</code> have type <code>TBool</code>. Finally, we return the type of the overall unary expression, which is also <code>TBool</code>.</p>
+<p>However, it is not always the case that an expression is well-typed. What should <code>check</code> return in those cases? Clearly, we can't return a type as we normally would, because that would mean that the ill-typed expression <em>has</em> a valid type.</p>
+<p>Instead, the way we handle ill-typed expressions in this assignment is through exceptions. You have probably encountered exceptions in other languages. In OCaml, to raise an exception <code>exn</code>, we simply say <code>raise exn</code>. To handle exception <code>exn</code> that might arise during the evaluation of an expression <code>e</code>, we write</p>
+<pre><code class="language-ocaml">try
+  e
+with
+| exn -&gt; (* exception handling code *)
+</code></pre>
+<p>If your type checker encounters a type error, it should raise a <code>TypeError</code>, which is defined in <code>error.ml</code>. <strong>However, you don't need to raise exceptions explicitly using <code>raise</code> (and we recommend against doing that).</strong> Instead, use the helper functions <code>error.ml</code>, who will raise the appropriate exceptions on your behalf.</p>
+<p>In addition to the typing rules described in the reference manual, your type checker should also perform a few other semantic checks. For example, a program should only have one <code>main</code> function, which takes no argument and returns a unit. You can get some hints about various semantic checks by looking at the helper functions in <code>error.ml</code>.</p>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>You can think of the environment in AS1 as a lazy substitution table.</p>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="cs160-assignment-4-code-generation"><a class="header" href="#cs160-assignment-4-code-generation">CS160 Assignment 4: Code Generation</a></h2>
 <p>Your compiler will generate x86 assembly code for Patina programs.</p>
 <!-- TODO: Provide a more precise specification of the dynamic semantics of Patina --><div style="break-before: page; page-break-before: always;"></div><h2 id="cs160-assignment-5-optimizations"><a class="header" href="#cs160-assignment-5-optimizations">CS160 Assignment 5: Optimizations</a></h2>
 <!-- TODO: Decide what to do for this project. -->
