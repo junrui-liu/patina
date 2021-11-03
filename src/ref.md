@@ -39,3 +39,11 @@ ID          = a letter or underscore, followed by any number of letters, numbers
 Unary operators have the highest precedence, followed by the arithmetic operators, integer relations, and logical operators, with their usual precedence. That is, multiplication and division have higher precedence than addition and subtraction, and logical conjunction has higher precedence over disjunction.
 
 Operators associate to the left. Relations are non-associative.
+
+## Typing Rules
+
+### Changelog
+None
+
+Please view the typing rules [here](https://github.com/fredfeng/CS160/blob/main/assignments/as3/types/type.pdf).
+
