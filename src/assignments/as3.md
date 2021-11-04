@@ -1,6 +1,6 @@
 # CS160 Assignment 3: Type Checking
 
-**Assignment due: TBD**
+**Assignment due: Monday, November 15 11:59PM**
 
 In this assignment, you will implement a type checker for you Patina compiler.
 
@@ -31,7 +31,7 @@ The `typecheck.ml` file contains a skeleton of the type checking algorithm. On a
 - Previously, the `result` type was `int`, because your interpreter was evaluating the input expression to an integer. Now the `result` type is `Ast.typ` (which can be either `TUnit`, `TBool`, `TInt`, or `TArr`), because the type checker computes the type of the input expression (if the expression is well-typed).
 - Previously, the `environment` type was `(string * int) list`, which maps identifiers to their integer values[^1]. Now the environment is called `tenv`, which stands for **t**yping **env**ironment. This is the \\(\Gamma\\) you have encountered in the typing rules, which maps identifiers to their declared types. The `check` function also takes in a **f**unction **env**ironment, which is the \\(\Delta\\) in the typing rules.
 
-The structure of `check` is also quite similar to `interpret'`. It traverses the AST in a post-order/bottom-up manner, by pattern-matching on the input expression, recursively type-checking the sub-expressions (if any), and aggregates the types of the sub-expressions. You can see a concrete example in the partially written cases we've provided. For example, in the case of unary `Not` expressions,
+The structure of `check` is also quite similar to `interpret'`. It traverses the AST in a post-order/bottom-up manner, by pattern-matching on the input expression, recursively type-checking the sub-expressions (if any), and aggregating the types of the sub-expressions. You can see a concrete example in the partially written cases we've provided. For example, in the case of unary `Not` expressions,
 ```ocaml
 | Unary (Not, e) ->
     let te = type_of e in
