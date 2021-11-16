@@ -56,4 +56,27 @@ For the latter, you will be reading variables from the stack into some fixed reg
 		add %rbx %rax
 		mov %rax 16(%rbp)
 
+# Mandatory Part - Loops, Conditionals, and Variables
+
+Fill in the holes in the provided code, so that the `compile` function correctly converts an AST from the following subset of Patina to x86 assembly.
+
+	type expr =
+	  | Const of const
+	  | Id of string
+	  | Let of string * typ * expr
+	  | Assign of string * expr
+	  | Unary of unop * expr
+	  | Binary of binop * expr * expr
+	  | Ite of expr * expr * expr  
+	  | Seq of expr list
+	  | While of expr * expr
+
+# Bonus Part 1 - Functions
+
+TBF
+
+# Bonus Part 2 - Arrays
+
+TBF
+
 <!-- TODO: Provide a more precise specification of the dynamic semantics of Patina -->
