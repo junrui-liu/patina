@@ -2,7 +2,7 @@
 
 **Assignment due: Monday, November 15 11:59PM**
 
-In this assignment, you will implement a type checker for you Patina compiler.
+In this assignment, you will implement a type checker for your Patina compiler.
 
 ## Instructions
 1. Download the starter code [here](https://github.com/fredfeng/CS160/blob/main/assignments/as3/).

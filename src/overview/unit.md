@@ -24,12 +24,6 @@ The value of `en` will become the value of the overall sequence expression.
 
 So in the previous example, the value of the overall sequence expression is the value of `print_int(9)`, which is `()`, the unit value. The value of `print_int(8)` is suppressed.[^1]
 
-You can initiate a sequence wherever an expression is expected, and you can suppress any type of value using the semicolon. As an example,
-```rust,no_run,noplayground
-{ 1; print_int(2); 3 } + 4
-```
-evaluates to `7`, because the left operand of the addition evaluates to `3`. Although `1` evaluates to `1` and `print_int(2)` evaluates to `()`, those values are ignored. Still, the _effect_ of evaluating `print_int(2)` will be observable, as the character `2` will be printed to the standard output.
-
 A sequence has to have at least one expression, but it may very well have just a single expression, as you have encountered in a previous if-then-else expression:
 ```rust,no_run,noplayground
 if 0 <= 1 then {
@@ -122,7 +116,3 @@ For simplicity, Patina has no `break` or `continue` constructs.
 
 
 [^1]: For those of you familiar with Java or C, the semicolon has a different meaning here. In Java or C, a semicolon signals the end of a simple statement. In Patina, a semicolon is part of the syntax for sequence expressions, so they must appear together with a surrounding pair of curly braces. Moreover, a semicolon is always sandwiched between two expressions, and it means that "we don't care the value of the first expression, but please evaluate it before you evaluate the expression after the semicolon."
-
-
-
-[^2]: Yes, you can write `1; print_int(2); 3; ()`, which evaluates to the unit value `()`.
