@@ -153,10 +153,6 @@
 <p>To evaluate a sequence expression <code>{ e1; e2; ...; en }</code>, we evaluate each <code>ei</code> sequentially, discarding the values of all expressions except for the last expression <code>en</code>.
 The value of <code>en</code> will become the value of the overall sequence expression.</p>
 <p>So in the previous example, the value of the overall sequence expression is the value of <code>print_int(9)</code>, which is <code>()</code>, the unit value. The value of <code>print_int(8)</code> is suppressed.<sup class="footnote-reference"><a href="#1">1</a></sup></p>
-<p>You can initiate a sequence wherever an expression is expected, and you can suppress any type of value using the semicolon. As an example,</p>
-<pre><code class="language-rust no_run noplayground">{ 1; print_int(2); 3 } + 4
-</code></pre>
-<p>evaluates to <code>7</code>, because the left operand of the addition evaluates to <code>3</code>. Although <code>1</code> evaluates to <code>1</code> and <code>print_int(2)</code> evaluates to <code>()</code>, those values are ignored. Still, the <em>effect</em> of evaluating <code>print_int(2)</code> will be observable, as the character <code>2</code> will be printed to the standard output.</p>
 <p>A sequence has to have at least one expression, but it may very well have just a single expression, as you have encountered in a previous if-then-else expression:</p>
 <pre><code class="language-rust no_run noplayground">if 0 &lt;= 1 then {
   2 + 3
@@ -227,9 +223,6 @@ The value of <code>en</code> will become the value of the overall sequence expre
 <p>For simplicity, Patina has no <code>break</code> or <code>continue</code> constructs.</p>
 <div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
 <p>For those of you familiar with Java or C, the semicolon has a different meaning here. In Java or C, a semicolon signals the end of a simple statement. In Patina, a semicolon is part of the syntax for sequence expressions, so they must appear together with a surrounding pair of curly braces. Moreover, a semicolon is always sandwiched between two expressions, and it means that &quot;we don't care the value of the first expression, but please evaluate it before you evaluate the expression after the semicolon.&quot;</p>
-</div>
-<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
-<p>Yes, you can write <code>1; print_int(2); 3; ()</code>, which evaluates to the unit value <code>()</code>.</p>
 </div>
 
                     </main>

@@ -136,81 +136,97 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="cs160-assignment-4-code-generation"><a class="header" href="#cs160-assignment-4-code-generation">CS160 Assignment 4: Code Generation</a></h2>
+                        <h1 id="cs160-assignment-4-code-generation"><a class="header" href="#cs160-assignment-4-code-generation">CS160 Assignment 4: Code Generation</a></h1>
+<p><strong>Assignment due: Wednesday, November 24 11:59PM</strong></p>
 <p>Your compiler will generate x86 assembly code for Patina programs.</p>
-<p>For this assignment, you will tackling the most central part of a compiler: the generation of code of a lower level language. In this case, we will be using x86 as the target language. <a href="https://cs.brown.edu/courses/cs033/docs/guides/x64_cheatsheet.pdf">Cheat sheet #1</a> <a href="http://www.cs.cmu.edu/afs/cs/academic/class/15213-s20/www/recitations/x86-cheat-sheet.pdf">Cheat sheet #2</a></p>
+<h2 id="submission-and-grading"><a class="header" href="#submission-and-grading">Submission and Grading</a></h2>
+<p>TBF</p>
+<h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
+<p>For this assignment, you will be tackling the most central part of a compiler: the generation of code of a lower level language. In this case, we will be using x86 as the target language. See the <a href="#resources">Resources</a> section </p>
 <p>This would normally be far more difficult than each of the other individual stages of the compiler. However, we have introduced a number of simplifications to make it doable.</p>
 <ol>
 <li>
-<p>Function calls are disallowed, and any functions besides main. In essence, the patina files to be compiled will represent a simple script. (Functions will be included in bonus part #1.)</p>
+<p>Function calls are disallowed, and any functions besides main. In essence, the patina files to be compiled will represent a simple script. (Functions will be included in <a href="#bonus-part-1---functions">bonus part #1</a>.)</p>
 </li>
 <li>
-<p>Arrays are no longer included in the language specification. This allows all data to be stored on the stack as supposed to on the heap. (Arrays will be included in bonus part #2.)</p>
+<p>Arrays are no longer included in the language specification. This allows all data to be stored on the stack as supposed to on the heap. (Arrays will be included in <a href="#bonus-part-2---arrays">bonus part #2</a>.)</p>
 </li>
 <li>
 <p>This matters for performance but not to correctness, no register allocation algorithm needs to be written. All data will be stored inside a single frame of the stack. </p>
 </li>
 </ol>
 <p>However, this still leaves a fair amount of complexity. For example, the following function calculating fibonacci numbers is still allowed.</p>
-<pre><code>	fn main() -&gt; unit {
-		let fibn : int = 10;
-		let firstval : int = 1;
-		let secondval : int = 1;
-		if (fibn &lt; 0) then
-			{let res : int = 0/0} else
-		{
-			while (fibn &gt; 0){
-				let sum : int = firstval + secondval;
-				firstval = secondval;
-				secondval = sum;
-				fibn = fibn - 1
-			};
-			let res : int = secondval
-		}
-	}
+<pre><code class="language-rust no_run noplayground">fn main() -&gt; unit {
+	let fibn : int = 10;
+	let firstval : int = 1;
+	let secondval : int = 1;
+	if (fibn &lt; 0) then {
+		let res : int = 0/0
+	} else {
+   	while (fibn &gt; 0){
+   		let sum : int = firstval + secondval;
+   		firstval = secondval;
+   		secondval = sum;
+   		fibn = fibn - 1
+	};
+	let res : int = secondval
+   }
+}
 </code></pre>
 <p>As you can see, this still contains the challenges for implementation of</p>
 <ol>
 <li>jumps required for while loops and if expressions</li>
 <li>binop expressions which when compiled require multiple lines of assembly.</li>
 </ol>
-<p>For the former, you will be adding labels into the assembly to allow appropriate jumps. For example, the expression {if 0 then {2} else {1} + 1} should be translated into something equivalent to the following (ignore the binop compilation there for now).</p>
-<pre><code>	cmp $0 $1
-	je L1
-	mov $1 %rax
-	jmp L2
-	L1:
-	mov $2 %rax
-	L2:
-	add %rax $1
+<p>For the former, you will be adding labels into the assembly to allow appropriate jumps. For example, the expression <code>if false then {2} else {1} + 1</code> should be translated into something equivalent to the following (ignore the binop compilation there for now).</p>
+<pre><code>cmp $1, $0
+je L1
+mov $1, %rax
+jmp L2
+L1:
+mov $2, %rax
+L2:
+add $1, %rax
 </code></pre>
-<p>For the latter, you will be reading variables from the stack into some fixed registers, pushing them onto the stack temporarily to allow for arbitrary depth arithmetic trees, and then writing them back there. For example, the expression x = x * 4 should be translated into something equivalent to the following (which is inefficient, but you only need correctness for now.)</p>
-<pre><code>	mov 16(%rbp) %rax
-	push %rax
-	mov $4 %rax
-	mov %rax %rbx
-	pop %rax
-	add %rbx %rax
-	mov %rax 16(%rbp)
+<p>For the latter, you will be reading variables from the stack into some fixed registers, pushing them onto the stack temporarily to allow for arbitrary depth arithmetic trees, and then writing them back there. For example, the expression <code>x = x * 4</code> should be translated into something equivalent to the following (which is inefficient, but you only need correctness for now.)</p>
+<pre><code>mov 16(%rbp), %rax
+push %rax
+mov $4, %rax
+mov %rax, %rbx
+pop %rax,
+add %rbx, %rax
+mov %rax, 16(%rbp)
 </code></pre>
-<h1 id="mandatory-part---loops-conditionals-and-variables"><a class="header" href="#mandatory-part---loops-conditionals-and-variables">Mandatory Part - Loops, Conditionals, and Variables</a></h1>
+<h2 id="what-you-need-to-implement"><a class="header" href="#what-you-need-to-implement">What you need to implement</a></h2>
+<h3 id="mandatory-part---loops-conditionals-and-variables"><a class="header" href="#mandatory-part---loops-conditionals-and-variables">Mandatory Part - Loops, Conditionals, and Variables</a></h3>
 <p>Fill in the holes in the provided code, so that the <code>compile</code> function correctly converts an AST from the following subset of Patina to x86 assembly.</p>
-<pre><code>type expr =
-  | Const of const
-  | Id of string
-  | Let of string * typ * expr
-  | Assign of string * expr
-  | Unary of unop * expr
-  | Binary of binop * expr * expr
-  | Ite of expr * expr * expr  
-  | Seq of expr list
-  | While of expr * expr
+<pre><code class="language-ocaml">type expr =
+   | Const of const
+   | Id of string
+   | Let of string * typ * expr
+   | Assign of string * expr
+   | Unary of unop * expr
+   | Binary of binop * expr * expr
+   | Ite of expr * expr * expr  
+   | Seq of expr list
+   | While of expr * expr
 </code></pre>
-<h1 id="bonus-part-1---functions"><a class="header" href="#bonus-part-1---functions">Bonus Part 1 - Functions</a></h1>
+<h3 id="bonus-part-1---functions"><a class="header" href="#bonus-part-1---functions">Bonus Part 1 - Functions</a></h3>
 <p>TBF</p>
-<h1 id="bonus-part-2---arrays"><a class="header" href="#bonus-part-2---arrays">Bonus Part 2 - Arrays</a></h1>
+<h3 id="bonus-part-2---arrays"><a class="header" href="#bonus-part-2---arrays">Bonus Part 2 - Arrays</a></h3>
 <p>TBF</p>
-<!-- TODO: Provide a more precise specification of the dynamic semantics of Patina -->
+<h2 id="resources"><a class="header" href="#resources">Resources</a></h2>
+<h3 id="x86-assembly"><a class="header" href="#x86-assembly">x86 Assembly</a></h3>
+<ol>
+<li><a href="https://flint.cs.yale.edu/cs421/papers/x86-asm/asm.html">Quick Start Guide</a></li>
+<li><a href="https://cs.brown.edu/courses/cs033/docs/guides/x64_cheatsheet.pdf">Cheat sheet #1</a></li>
+<li><a href="http://www.cs.cmu.edu/afs/cs/academic/class/15213-s20/www/recitations/x86-cheat-sheet.pdf">Cheat sheet #2</a></li>
+</ol>
+<h3 id="x86-calling-convention-cdecl"><a class="header" href="#x86-calling-convention-cdecl">x86 Calling Convention (<code>cdecl</code>)</a></h3>
+<ol>
+<li><a href="https://en.wikipedia.org/wiki/X86_calling_conventions">Wikipedia page</a> on x86 calling conventions</li>
+</ol>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
