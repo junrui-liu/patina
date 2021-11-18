@@ -9,7 +9,7 @@ TBF
 
 
 ## Introduction
-For this assignment, you will be tackling the most central part of a compiler: the generation of code of a lower level language. In this case, we will be using x86 as the target language. See the [Resources](#resources) section 
+For this assignment, you will be tackling the most central part of a compiler: the generation of code of a lower level language. In this case, we will be using x86 as the target language. See the [Resources](#resources) section
 
 This would normally be far more difficult than each of the other individual stages of the compiler. However, we have introduced a number of simplifications to make it doable.
 
@@ -17,7 +17,9 @@ This would normally be far more difficult than each of the other individual stag
 
 2. Arrays are no longer included in the language specification. This allows all data to be stored on the stack as supposed to on the heap. (Arrays will be included in [bonus part #2](#bonus-part-2---arrays).)
 
-3. This matters for performance but not to correctness, no register allocation algorithm needs to be written. All data will be stored inside a single frame of the stack. 
+3. This matters for performance but not to correctness, no register allocation algorithm needs to be written. All data will be stored inside a single frame of the stack.
+
+## Overview of approach
 
 However, this still leaves a fair amount of complexity. For example, the following function calculating fibonacci numbers is still allowed.
 ```rust,no_run,noplayground
@@ -66,6 +68,15 @@ mov %rax, 16(%rbp)
 ```
 
 ## What you need to implement
+
+In each of these cases, you can test your code (download the files from the github repository) by running
+
+`./patinac {yourfile.pt}; ./prog`.
+
+The easiest way to test is likely to be testing purely on expressions. In order to do this you must designate expr as a start symbol in your parser, just as prog is already.
+
+Inside patinac, you can delete or keep the -e flag to determine whether the file is being parsed as a program with a single function in it or as just an expression, respectively.
+
 ### Mandatory Part - Loops, Conditionals, and Variables
 
 Fill in the holes in the provided code, so that the `compile` function correctly converts an AST from the following subset of Patina to x86 assembly.
@@ -77,7 +88,7 @@ type expr =
    | Assign of string * expr
    | Unary of unop * expr
    | Binary of binop * expr * expr
-   | Ite of expr * expr * expr  
+   | Ite of expr * expr * expr
    | Seq of expr list
    | While of expr * expr
 ```
@@ -96,6 +107,6 @@ TBF
 1. [Quick Start Guide](https://flint.cs.yale.edu/cs421/papers/x86-asm/asm.html)
 2. [Cheat sheet #1](https://cs.brown.edu/courses/cs033/docs/guides/x64_cheatsheet.pdf)
 3. [Cheat sheet #2](http://www.cs.cmu.edu/afs/cs/academic/class/15213-s20/www/recitations/x86-cheat-sheet.pdf)
-  
+
 ### x86 Calling Convention (`cdecl`)
 1. [Wikipedia page](https://en.wikipedia.org/wiki/X86_calling_conventions) on x86 calling conventions
