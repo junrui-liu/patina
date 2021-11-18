@@ -142,7 +142,7 @@
 <h2 id="submission-and-grading"><a class="header" href="#submission-and-grading">Submission and Grading</a></h2>
 <p>TBF</p>
 <h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
-<p>For this assignment, you will be tackling the most central part of a compiler: the generation of code of a lower level language. In this case, we will be using x86 as the target language. See the <a href="#resources">Resources</a> section </p>
+<p>For this assignment, you will be tackling the most central part of a compiler: the generation of code of a lower level language. In this case, we will be using x86 as the target language. See the <a href="#resources">Resources</a> section</p>
 <p>This would normally be far more difficult than each of the other individual stages of the compiler. However, we have introduced a number of simplifications to make it doable.</p>
 <ol>
 <li>
@@ -152,9 +152,10 @@
 <p>Arrays are no longer included in the language specification. This allows all data to be stored on the stack as supposed to on the heap. (Arrays will be included in <a href="#bonus-part-2---arrays">bonus part #2</a>.)</p>
 </li>
 <li>
-<p>This matters for performance but not to correctness, no register allocation algorithm needs to be written. All data will be stored inside a single frame of the stack. </p>
+<p>This matters for performance but not to correctness, no register allocation algorithm needs to be written. All data will be stored inside a single frame of the stack.</p>
 </li>
 </ol>
+<h2 id="overview-of-approach"><a class="header" href="#overview-of-approach">Overview of approach</a></h2>
 <p>However, this still leaves a fair amount of complexity. For example, the following function calculating fibonacci numbers is still allowed.</p>
 <pre><code class="language-rust no_run noplayground">fn main() -&gt; unit {
 	let fibn : int = 10;
@@ -198,6 +199,10 @@ add %rbx, %rax
 mov %rax, 16(%rbp)
 </code></pre>
 <h2 id="what-you-need-to-implement"><a class="header" href="#what-you-need-to-implement">What you need to implement</a></h2>
+<p>In each of these cases, you can test your code (download the files from the github repository) by running</p>
+<p><code>./patinac {yourfile.pt}; ./prog</code>.</p>
+<p>The easiest way to test is likely to be testing purely on expressions. In order to do this you must designate expr as a start symbol in your parser, just as prog is already.</p>
+<p>Inside patinac, you can delete or keep the -e flag to determine whether the file is being parsed as a program with a single function in it or as just an expression, respectively.</p>
 <h3 id="mandatory-part---loops-conditionals-and-variables"><a class="header" href="#mandatory-part---loops-conditionals-and-variables">Mandatory Part - Loops, Conditionals, and Variables</a></h3>
 <p>Fill in the holes in the provided code, so that the <code>compile</code> function correctly converts an AST from the following subset of Patina to x86 assembly.</p>
 <pre><code class="language-ocaml">type expr =
@@ -207,7 +212,7 @@ mov %rax, 16(%rbp)
    | Assign of string * expr
    | Unary of unop * expr
    | Binary of binop * expr * expr
-   | Ite of expr * expr * expr  
+   | Ite of expr * expr * expr
    | Seq of expr list
    | While of expr * expr
 </code></pre>
