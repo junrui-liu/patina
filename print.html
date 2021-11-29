@@ -938,7 +938,7 @@ with
 <p>You can think of the environment in AS1 as a lazy substitution table.</p>
 </div>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="cs160-assignment-4-code-generation"><a class="header" href="#cs160-assignment-4-code-generation">CS160 Assignment 4: Code Generation</a></h1>
-<p><strong>Assignment due: Wednesday, November 24 11:59PM</strong></p>
+<p><strong>Assignment due: Monday, November 29 11:59PM</strong></p>
 <p>Your compiler will generate x86 assembly code for Patina programs.</p>
 <h2 id="submission-and-grading-3"><a class="header" href="#submission-and-grading-3">Submission and Grading</a></h2>
 <p>TBF</p>
@@ -1033,7 +1033,31 @@ mov %rax, 16(%rbp)
 <li><a href="https://en.wikipedia.org/wiki/X86_calling_conventions">Wikipedia page</a> on x86 calling conventions</li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="cs160-assignment-5-optimizations"><a class="header" href="#cs160-assignment-5-optimizations">CS160 Assignment 5: Optimizations</a></h2>
-<!-- TODO: Decide what to do for this project. -->
+<p><strong>Assignment due: TBD</strong></p>
+<h2 id="submission-and-grading-4"><a class="header" href="#submission-and-grading-4">Submission and Grading</a></h2>
+<p>TBF</p>
+<h2 id="what-you-need-to-implement-2"><a class="header" href="#what-you-need-to-implement-2">What you need to implement</a></h2>
+<p>In this assignment, you will implement the optimization phase for your compiler. Optimizations are commonly performed on <a href="https://en.wikipedia.org/wiki/Intermediate_representation">intermediate representations</a>. However, for simplicity you will directly optimize on the following subset of Patina AST, which excludes variable mutation, arrays, and while loops:</p>
+<pre><code class="language-ocaml">type expr =
+  | Const of const
+  | Id of string
+  | Let of string * typ * expr
+  | Unary of unop * expr
+  | Binary of binop * expr * expr
+  | Ite of expr * expr * expr
+  | Seq of expr list
+  | Call of string * expr list
+</code></pre>
+<p>On minimum, you should implement constant folding and propagation:</p>
+<ol>
+<li>Constant folding partially evaluates an expression as much as it can. For example, the nested binary expression <code>100 * 100 * 100</code> will be replaced with a single constant, <code>1000000</code>.</li>
+<li>Constant propagation replaces references to constant variables with their actual values. For instance, the sequence <code>{ let x: int = 1; print_int(x) }</code> will be transformed into <code>{ let x: int = 1; print_int(1) }</code>.</li>
+</ol>
+<p>Fill in the body of function <code>fold_constant</code> in <code>optimize.ml</code>. As always, you will likely need some kind of environment (to do constant propagation). Think about what kind of environment might be good. Then, replace <code>bottom</code> with a type of your choice on the following line in <code>optimize.ml</code>:</p>
+<pre><code class="language-ocaml">type env = (string * bottom) list
+</code></pre>
+<p>and perform <code>fold_constant</code> using this environment.</p>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
