@@ -1,6 +1,6 @@
 ## CS160 Assignment 5: Optimizations
 
-**Assignment due: TBD**
+**Assignment due: Friday, December 10th 11:59PM**
 
 ## Submission and Grading
 TBF
@@ -28,3 +28,10 @@ Fill in the body of function `fold_constant` in `optimize.ml`. As always, you wi
 type env = (string * bottom) list
 ```
 and perform `fold_constant` using this environment.
+
+We provided a driver that performs your optimizations on Patina source programs. You can invoke it with
+```
+dune exec ./patina.exe -- test.pt
+```
+
+It will print out the ASTs for the original program as well as the optimized program. It also makes sure that the optimized program is well-typed.
