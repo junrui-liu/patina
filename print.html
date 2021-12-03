@@ -1033,7 +1033,7 @@ mov %rax, 16(%rbp)
 <li><a href="https://en.wikipedia.org/wiki/X86_calling_conventions">Wikipedia page</a> on x86 calling conventions</li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="cs160-assignment-5-optimizations"><a class="header" href="#cs160-assignment-5-optimizations">CS160 Assignment 5: Optimizations</a></h2>
-<p><strong>Assignment due: TBD</strong></p>
+<p><strong>Assignment due: Friday, December 10th 11:59PM</strong></p>
 <h2 id="submission-and-grading-4"><a class="header" href="#submission-and-grading-4">Submission and Grading</a></h2>
 <p>TBF</p>
 <h2 id="what-you-need-to-implement-2"><a class="header" href="#what-you-need-to-implement-2">What you need to implement</a></h2>
@@ -1057,6 +1057,10 @@ mov %rax, 16(%rbp)
 <pre><code class="language-ocaml">type env = (string * bottom) list
 </code></pre>
 <p>and perform <code>fold_constant</code> using this environment.</p>
+<p>We provided a driver that performs your optimizations on Patina source programs. You can invoke it with</p>
+<pre><code>dune exec ./patina.exe -- test.pt
+</code></pre>
+<p>It will print out the ASTs for the original program as well as the optimized program. It also makes sure that the optimized program is well-typed.</p>
 
                     </main>
 
